@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LangGraph Mastery — Nitesh's Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F8FAFC;--s1:#FFFFFF;--s2:#FFFFFF;--s3:#F1F5F9;--s4:#E2E8F0;
+  --border:#E2E8F0;--border2:#CBD5E1;
+  --cyan:#0891B2;--blue:#2563EB;--violet:#7C3AED;
+  --green:#059669;--amber:#D97706;--red:#DC2626;--pink:#DB2777;
+  --orange:#EA580C;--lime:#65A30D;
+  --text:#0F172A;--dim:#475569;--muted:#94A3B8;
+  --code:#1E293B;--cg:#4ADE80;--cb:#60A5FA;--cp:#C084FC;--co:#FB923C;--cr:#F87171;--cm:#94A3B8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+/* Light theme body bg */
+body{background:#F8FAFC}
+
+/* ── Grain overlay ── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.15}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;height:56px;gap:0}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:2px;margin-right:40px;white-space:nowrap}
+.nav-links{display:flex;gap:0;overflow-x:auto;flex:1}
+.nav-links::-webkit-scrollbar{height:0}
+.nav-link{font-size:12.5px;color:var(--dim);padding:0 16px;height:56px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;text-decoration:none}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+/* ── Layout ── */
+.page{position:relative;z-index:1}
+
+/* ── Hero ── */
+.hero{padding:80px 60px 60px;max-width:1200px;margin:0 auto;position:relative}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--cyan)}
+.hero h1{font-family:'Clash Display',sans-serif;font-size:clamp(52px,7vw,88px);font-weight:700;line-height:1.0;color:var(--text);margin-bottom:24px}
+.hero h1 .accent{color:var(--cyan);display:block}
+.hero-sub{font-size:18px;color:var(--dim);line-height:1.7;max-width:600px;margin-bottom:40px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hstat{display:flex;flex-direction:column;gap:4px}
+.hstat-v{font-family:'Clash Display',sans-serif;font-size:36px;font-weight:700;color:var(--text);line-height:1}
+.hstat-l{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+
+/* ── Sections ── */
+.section{padding:60px;max-width:1200px;margin:0 auto}
+.section+.section{padding-top:0}
+
+.sec-header{display:flex;align-items:center;gap:16px;margin-bottom:36px}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px}
+.sec-title{font-family:'Clash Display',sans-serif;font-size:32px;font-weight:700;color:var(--text)}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+/* ── Phase cards ── */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.phase-card{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.phase-card:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ph1::before{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.ph2::before{background:linear-gradient(90deg,var(--violet),var(--pink))}
+.ph3::before{background:linear-gradient(90deg,var(--amber),var(--orange))}
+.ph4::before{background:linear-gradient(90deg,var(--green),var(--lime))}
+.ph5::before{background:linear-gradient(90deg,var(--red),var(--pink))}
+.ph6::before{background:linear-gradient(90deg,var(--cyan),var(--blue))}
+.phase-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.phase-weeks{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px}
+.phase-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px}
+.phase-desc{font-size:12.5px;color:var(--dim);line-height:1.6}
+
+/* ── Pattern section ── */
+.patterns-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pattern-card{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.pattern-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#F8FAFC}
+.pattern-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px}
+.pattern-name{font-size:16px;font-weight:700;color:var(--text);flex:1}
+.pattern-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:700}
+.pattern-body{padding:16px 20px}
+.pattern-when{font-size:12.5px;color:var(--dim);margin-bottom:12px;line-height:1.5}
+.pattern-diagram{background:#1E293B;border-radius:6px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#94A3B8;line-height:1.8;margin-bottom:12px;overflow-x:auto}
+.pattern-diagram .dn{color:var(--co)}
+.pattern-diagram .de{color:var(--cb)}
+.pattern-diagram .dc{color:var(--cp)}
+
+/* ── Code blocks ── */
+.code-wrap{background:var(--code);border:1px solid #334155;border-radius:10px;overflow:hidden;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#0F172A;border-bottom:1px solid #334155}
+.code-lang{font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;letter-spacing:1px;text-transform:uppercase}
+.code-file{font-family:'JetBrains Mono',monospace;font-size:10px;color:#7DD3FC}
+.code-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;cursor:pointer;padding:2px 8px;border:1px solid #334155;border-radius:3px;background:transparent;transition:all .15s}
+.code-copy:hover{color:#7DD3FC;border-color:#7DD3FC}
+pre{padding:18px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;tab-size:4;color:#E2E8F0}
+.kw{color:var(--cr)} .fn{color:var(--cb)} .cls{color:var(--co)} .st{color:var(--cg)} .cm{color:var(--cm);font-style:italic} .tp{color:var(--cp)} .num{color:var(--co)}
+
+/* ── Memory section ── */
+.memory-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px}
+.mem-card{background:#FFFFFF;border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .2s;cursor:default;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mem-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.mem-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;margin-bottom:8px}
+.mem-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.mem-desc{font-size:11.5px;color:var(--dim);line-height:1.55}
+.mem-when{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ── Projects ── */
+.projects-list{display:flex;flex-direction:column;gap:16px}
+.proj{background:#FFFFFF;border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.proj:hover{border-color:var(--border2);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.proj-head{display:flex;align-items:center;gap:14px;padding:18px 24px;cursor:pointer;user-select:none;background:#FFFFFF;transition:background .15s}
+.proj-head:hover{background:#F8FAFC}
+.proj-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;width:32px;flex-shrink:0}
+.proj-title{font-size:16px;font-weight:700;color:var(--text);flex:1}
+.proj-level{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:700;flex-shrink:0}
+.lv-b{background:rgba(5,150,105,.12);color:#065F46}
+.lv-i{background:rgba(217,119,6,.12);color:#92400E}
+.lv-a{background:rgba(124,58,237,.12);color:#4C1D95}
+.lv-e{background:rgba(220,38,38,.12);color:#7F1D1D}
+.proj-chevron{color:var(--muted);transition:transform .25s;font-size:18px;flex-shrink:0}
+.proj.open .proj-chevron{transform:rotate(90deg)}
+.proj-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border);background:#FFFFFF}
+.proj.open .proj-body{display:block}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.proj-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.plist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.plist li{font-size:13px;color:var(--dim);padding-left:16px;position:relative;line-height:1.5}
+.plist li::before{content:'›';position:absolute;left:0;color:var(--muted);font-weight:700}
+.plist li strong{color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--dim);background:#F1F5F9}
+
+/* ── Tutorials block ── */
+.tutorials{background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-top:16px}
+.tut-header{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.tut-list{display:flex;flex-direction:column;gap:8px}
+.tut-item{display:flex;align-items:flex-start;gap:10px}
+.tut-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;border-radius:4px;font-weight:700;flex-shrink:0;margin-top:1px;text-transform:uppercase}
+.tb-video{background:rgba(220,38,38,.1);color:#991B1B}
+.tb-docs {background:rgba(37,99,235,.1);color:#1E3A8A}
+.tb-code {background:rgba(5,150,105,.1);color:#064E3B}
+.tb-blog {background:rgba(217,119,6,.1);color:#78350F}
+.tb-paper{background:rgba(124,58,237,.1);color:#3B0764}
+.tut-info{flex:1}
+.tut-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.tut-desc{font-size:11.5px;color:var(--muted)}
+.tut-link{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);text-decoration:none;display:block;margin-top:2px;transition:color .15s}
+.tut-link:hover{color:var(--cyan)}
+
+/* ── Deliverable ── */
+.deliverable{background:linear-gradient(135deg,rgba(8,145,178,.06),rgba(37,99,235,.06));border:1px solid rgba(8,145,178,.25);border-radius:10px;padding:14px 18px;margin-top:12px;display:flex;gap:12px;align-items:flex-start}
+.del-icon{font-size:18px;flex-shrink:0}
+.del-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.del-text{font-size:13.5px;color:var(--text);font-weight:500}
+
+/* ── Resources table ── */
+.res-section{margin-bottom:40px}
+.res-section-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.res-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.res-cards{display:flex;flex-direction:column;gap:8px}
+.res-card{display:flex;align-items:flex-start;gap:12px;background:#FFFFFF;border:1px solid var(--border);border-radius:8px;padding:12px 16px;text-decoration:none;transition:all .15s}
+.res-card:hover{border-color:var(--cyan);background:#F0FDFF;transform:translateX(4px)}
+.res-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;border-radius:4px;font-weight:700;flex-shrink:0;margin-top:1px;letter-spacing:1px;text-transform:uppercase}
+.rb-video{background:rgba(220,38,38,.1);color:#991B1B}
+.rb-docs {background:rgba(37,99,235,.1);color:#1E3A8A}
+.rb-code {background:rgba(5,150,105,.1);color:#064E3B}
+.rb-blog {background:rgba(217,119,6,.1);color:#78350F}
+.rb-paper{background:rgba(124,58,237,.1);color:#3B0764}
+.rb-tool {background:rgba(8,145,178,.1);color:#164E63}
+.res-info{flex:1}
+.res-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:3px}
+.res-desc{font-size:12px;color:var(--muted);line-height:1.45}
+.res-url{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);margin-top:3px}
+.res-arrow{color:var(--muted);align-self:center;font-size:18px;flex-shrink:0}
+
+/* ── Reading order ── */
+.reading-order{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.ro-row{display:flex;align-items:stretch;border-bottom:1px solid var(--border)}
+.ro-row:last-child{border-bottom:none}
+.ro-row:hover{background:#F1F5F9}
+.ro-before{padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);font-weight:700;width:160px;flex-shrink:0;border-right:1px solid var(--border);display:flex;align-items:center;background:#F8FAFC}
+.ro-read{padding:12px 20px;font-size:13px;color:var(--dim);display:flex;align-items:center;flex:1;line-height:1.5}
+.ro-links{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ro-links a{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:500;color:var(--blue);text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid rgba(37,99,235,.2);background:rgba(37,99,235,.05);transition:all .15s}
+.ro-links a:hover{background:rgba(37,99,235,.12);border-color:rgba(37,99,235,.4);color:#1D4ED8}
+.ro-links a::after{content:'↗';font-size:10px;opacity:.6}
+
+/* ── Production checklist ── */
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#FFFFFF;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--dim)}
+.check-item .ci{color:var(--green);flex-shrink:0;font-size:16px;margin-top:1px}
+
+/* ── Footer ── */
+footer{padding:40px 60px;border-top:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);background:#FFFFFF}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#F1F5F9}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp .6s ease both}
+.hero>*:nth-child(1){animation-delay:.1s}
+.hero>*:nth-child(2){animation-delay:.2s}
+.hero>*:nth-child(3){animation-delay:.3s}
+.hero>*:nth-child(4){animation-delay:.4s}
+
+@media(max-width:900px){
+  .phases{grid-template-columns:1fr 1fr}
+  .patterns-grid{grid-template-columns:1fr}
+  .memory-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .checklist{grid-template-columns:1fr}
+  .section{padding:40px 20px}
+  .hero{padding:60px 20px 40px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">⬡ LANGGRAPH</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#plan">Plan</a>
+    <a class="nav-link" href="#internals">Internals</a>
+    <a class="nav-link" href="#patterns">Patterns</a>
+    <a class="nav-link" href="#memory">Memory</a>
+    <a class="nav-link" href="#projects">12 Projects</a>
+    <a class="nav-link" href="#production">Production</a>
+    <a class="nav-link" href="#resources">Resources</a>
+    <a class="nav-link" href="#reading">Reading Order</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero" id="plan">
+
+  <div class="hero-eyebrow">GenAI Orchestration · Expert Path · Nitesh · Wayfair</div>
+  <h1>LangGraph<span class="accent">Mastery.</span></h1>
+  <div class="hero-sub">Everything in one place — framework internals, all 7 patterns with code, 12 escalating projects, memory deep-dive, tutorials, artifacts, and production ops. Learn the patterns. Apply yourself.</div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-v">7</div><div class="hstat-l">Core Patterns</div></div>
+    <div class="hstat"><div class="hstat-v">12</div><div class="hstat-l">Projects</div></div>
+    <div class="hstat"><div class="hstat-v">5</div><div class="hstat-l">Memory Types</div></div>
+    <div class="hstat"><div class="hstat-v">20</div><div class="hstat-l">Weeks</div></div>
+    <div class="hstat"><div class="hstat-v">60+</div><div class="hstat-l">Resources</div></div>
+  </div>
+</div>
+
+<!-- ── LEARNING PLAN ── -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num">01</div>
+    <div class="sec-title">The 20-Week Learning Plan</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="phases">
+    <div class="phase-card ph1">
+      <div class="phase-label">Phase 1</div>
+      <div class="phase-weeks">W1–W3</div>
+      <div class="phase-title">Framework Internals</div>
+      <div class="phase-desc">StateGraph, nodes, edges, reducers, checkpointers, execution model. Build the mental model before patterns. Every bug you'll hit traces back to these primitives.</div>
+    </div>
+    <div class="phase-card ph2">
+      <div class="phase-label">Phase 2</div>
+      <div class="phase-weeks">W4–W10</div>
+      <div class="phase-title">The 7 Core Patterns</div>
+      <div class="phase-desc">ReAct, Plan-Execute, Reflection, Supervisor, Swarm, HITL, Parallelism. One project per pattern. Build from scratch before using prebuilts.</div>
+    </div>
+    <div class="phase-card ph3">
+      <div class="phase-label">Phase 3</div>
+      <div class="phase-weeks">W11–W14</div>
+      <div class="phase-title">Memory Deep Dive</div>
+      <div class="phase-desc">All 5 memory types. In-thread, cross-thread, semantic, episodic, procedural. LangMem, embedding stores, memory consolidation. The hardest topic.</div>
+    </div>
+    <div class="phase-card ph4">
+      <div class="phase-label">Phase 4</div>
+      <div class="phase-weeks">W15–W16</div>
+      <div class="phase-title">Advanced Projects</div>
+      <div class="phase-desc">Multi-agent pipelines, streaming real-time UI, MCP integration, complex state machines. Each project 2–3 weeks.</div>
+    </div>
+    <div class="phase-card ph5">
+      <div class="phase-label">Phase 5</div>
+      <div class="phase-weeks">W17–W20</div>
+      <div class="phase-title">Production & MLOps</div>
+      <div class="phase-desc">LangGraph Cloud vs self-hosted, LangSmith tracing, eval suites, failure recovery, cost optimization, deployment runbooks.</div>
+    </div>
+    <div class="phase-card ph6">
+      <div class="phase-label">Ongoing</div>
+      <div class="phase-weeks">∞</div>
+      <div class="phase-title">Compose Everything</div>
+      <div class="phase-desc">Every real system is a composition of these patterns. The goal is fluency — reaching for the right pattern instinctively.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INTERNALS ── -->
+<div class="section" id="internals">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div class="sec-title">Framework Internals</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><span class="code-lang">python</span><span class="code-file">core_primitives.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="kw">from</span> typing <span class="kw">import</span> <span class="tp">Annotated</span>, <span class="tp">TypedDict</span>
+<span class="kw">from</span> langgraph.graph <span class="kw">import</span> <span class="cls">StateGraph</span>, <span class="cls">START</span>, <span class="cls">END</span>, <span class="fn">add_messages</span>
+<span class="kw">from</span> langgraph.checkpoint.memory   <span class="kw">import</span> <span class="cls">MemorySaver</span>
+<span class="kw">from</span> langgraph.checkpoint.postgres <span class="kw">import</span> <span class="cls">PostgresSaver</span>
+<span class="kw">from</span> langgraph.prebuilt            <span class="kw">import</span> <span class="cls">ToolNode</span>
+
+<span class="cm"># ── 1. STATE — everything flows through this ──────────────────</span>
+<span class="kw">def</span> <span class="fn">merge_results</span>(a, b): <span class="kw">return</span> a + b   <span class="cm"># custom reducer</span>
+
+<span class="kw">class</span> <span class="cls">AgentState</span>(<span class="tp">TypedDict</span>):
+    messages:    <span class="tp">Annotated</span>[list, <span class="fn">add_messages</span>]   <span class="cm"># reducer: append</span>
+    plan:        list[str]                           <span class="cm"># reducer: overwrite</span>
+    results:     <span class="tp">Annotated</span>[list, <span class="fn">merge_results</span>]   <span class="cm"># reducer: custom</span>
+    step:        int
+    error:       str | <span class="kw">None</span>
+
+<span class="cm"># ── 2. NODES — any Python callable ───────────────────────────</span>
+<span class="kw">def</span> <span class="fn">llm_node</span>(state: <span class="cls">AgentState</span>):
+    response = model.<span class="fn">invoke</span>(state[<span class="st">"messages"</span>])
+    <span class="kw">return</span> {<span class="st">"messages"</span>: [response]}   <span class="cm"># partial update — reducer merges</span>
+
+<span class="kw">def</span> <span class="fn">router</span>(state: <span class="cls">AgentState</span>) -> str:
+    last = state[<span class="st">"messages"</span>][-<span class="num">1</span>]
+    <span class="kw">return</span> <span class="st">"tools"</span> <span class="kw">if</span> last.tool_calls <span class="kw">else</span> <span class="st">"end"</span>
+
+<span class="cm"># ── 3. GRAPH ASSEMBLY ────────────────────────────────────────</span>
+builder = <span class="cls">StateGraph</span>(<span class="cls">AgentState</span>)
+builder.<span class="fn">add_node</span>(<span class="st">"llm"</span>,   <span class="fn">llm_node</span>)
+builder.<span class="fn">add_node</span>(<span class="st">"tools"</span>, <span class="cls">ToolNode</span>(tools))
+builder.<span class="fn">add_edge</span>(<span class="cls">START</span>,   <span class="st">"llm"</span>)
+builder.<span class="fn">add_edge</span>(<span class="st">"tools"</span>, <span class="st">"llm"</span>)
+builder.<span class="fn">add_conditional_edges</span>(<span class="st">"llm"</span>, <span class="fn">router</span>,
+    {<span class="st">"tools"</span>: <span class="st">"tools"</span>, <span class="st">"end"</span>: <span class="cls">END</span>})
+
+<span class="cm"># ── 4. CHECKPOINTERS — persistence layer ─────────────────────</span>
+memory = <span class="cls">MemorySaver</span>()   <span class="cm"># dev only — lost on restart</span>
+<span class="cm"># memory = PostgresSaver.from_conn_string(DB_URI)  # production</span>
+
+graph = builder.<span class="fn">compile</span>(checkpointer=memory)
+
+<span class="cm"># ── 5. INVOKE with thread_id = one conversation ───────────────</span>
+config = {<span class="st">"configurable"</span>: {<span class="st">"thread_id"</span>: <span class="st">"user-123-session-456"</span>}}
+result = graph.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [user_msg]}, config)
+
+<span class="cm"># ── 6. STREAM — see every step as it runs ────────────────────</span>
+<span class="kw">for</span> event <span class="kw">in</span> graph.<span class="fn">stream</span>({<span class="st">"messages"</span>: [user_msg]}, config):
+    <span class="fn">print</span>(event)   <span class="cm"># {node_name: {state_update}}</span>
+
+<span class="cm"># ── 7. TIME TRAVEL — replay from any past checkpoint ──────────</span>
+<span class="kw">for</span> state <span class="kw">in</span> graph.<span class="fn">get_state_history</span>(config):
+    <span class="fn">print</span>(state.config, state.values, state.next)</pre>
+  </div>
+</div>
+
+<!-- ── PATTERNS ── -->
+<div class="section" id="patterns">
+  <div class="sec-header">
+    <div class="sec-num">03</div>
+    <div class="sec-title">The 7 Core Patterns</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="patterns-grid">
+
+    <!-- P1 ReAct -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">01</div>
+        <div class="pattern-name">ReAct</div>
+        <span class="pattern-tag" style="background:rgba(59,130,246,.15);color:#93C5FD">DEFAULT AGENT</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">LLM reasons → decides to call tool → tool executes → result feeds back to LLM. Loops until done. The baseline pattern for any tool-using agent.</div>
+        <div class="pattern-diagram"><span class="dn">START</span> → <span class="dn">[llm]</span> ──tool_calls?──<span class="dc">YES</span>→ <span class="dn">[tools]</span> → <span class="dn">[llm]</span>
+                 <span class="de">│</span>
+                <span class="dc">NO</span> → <span class="dn">END</span></div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">react.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">should_continue</span>(state) -> str:
+    last = state[<span class="st">"messages"</span>][-<span class="num">1</span>]
+    <span class="kw">return</span> <span class="st">"tools"</span> <span class="kw">if</span> last.tool_calls <span class="kw">else</span> <span class="st">"end"</span>
+
+builder.<span class="fn">add_node</span>(<span class="st">"llm"</span>,   <span class="fn">call_llm</span>)
+builder.<span class="fn">add_node</span>(<span class="st">"tools"</span>, <span class="cls">ToolNode</span>(tools))
+builder.<span class="fn">add_edge</span>(<span class="cls">START</span>, <span class="st">"llm"</span>)
+builder.<span class="fn">add_edge</span>(<span class="st">"tools"</span>, <span class="st">"llm"</span>)
+builder.<span class="fn">add_conditional_edges</span>(<span class="st">"llm"</span>,
+    <span class="fn">should_continue</span>, {<span class="st">"tools"</span>:<span class="st">"tools"</span>, <span class="st">"end"</span>:<span class="cls">END</span>})</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- P2 Plan-Execute -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">02</div>
+        <div class="pattern-name">Plan-and-Execute</div>
+        <span class="pattern-tag" style="background:rgba(124,58,237,.15);color:#C4B5FD">MULTI-STEP</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Separate planner from executor. Planner creates steps upfront. Executor runs each step. Replanner adapts based on results. Better than ReAct for long-horizon tasks.</div>
+        <div class="pattern-diagram"><span class="dn">START</span>→<span class="dn">[plan]</span>→<span class="dn">[execute]</span>→done?→<span class="dc">YES</span>→<span class="dn">END</span>
+                          <span class="de">↑</span>        <span class="dc">NO</span>
+                    <span class="dn">[replan]</span>←──────</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">plan_execute.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">class</span> <span class="cls">PlanState</span>(<span class="tp">TypedDict</span>):
+    input:      str
+    plan:       list[str]
+    past_steps: <span class="tp">Annotated</span>[list, <span class="fn">operator.add</span>]
+    response:   str | <span class="kw">None</span>
+
+<span class="kw">def</span> <span class="fn">planner</span>(state):
+    plan = planner_llm.<span class="fn">invoke</span>(state[<span class="st">"input"</span>])
+    <span class="kw">return</span> {<span class="st">"plan"</span>: plan.steps}
+
+<span class="kw">def</span> <span class="fn">should_end</span>(state) -> str:
+    <span class="kw">return</span> <span class="st">"end"</span> <span class="kw">if</span> state.get(<span class="st">"response"</span>) <span class="kw">else</span> <span class="st">"execute"</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- P3 Reflection -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">03</div>
+        <div class="pattern-name">Reflection</div>
+        <span class="pattern-tag" style="background:rgba(16,185,129,.15);color:#6EE7B7">SELF-CRITIQUE</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Agent generates output, then critiques it, then revises. Loop until quality threshold or max iterations. Use for writing, code, structured outputs.</div>
+        <div class="pattern-diagram"><span class="dn">START</span>→<span class="dn">[generate]</span>→<span class="dn">[reflect]</span>→PASS?→<span class="dc">YES</span>→<span class="dn">END</span>
+                              <span class="de">↑</span>              <span class="dc">NO</span>→ revise</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">reflection.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">should_continue</span>(state) -> str:
+    <span class="kw">if</span> state[<span class="st">"iterations"</span>] >= <span class="num">3</span>:
+        <span class="kw">return</span> <span class="st">"end"</span>
+    last = state[<span class="st">"messages"</span>][-<span class="num">1</span>].content
+    <span class="kw">return</span> <span class="st">"end"</span> <span class="kw">if</span> <span class="st">"PASS"</span> <span class="kw">in</span> last <span class="kw">else</span> <span class="st">"generate"</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- P4 Supervisor -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">04</div>
+        <div class="pattern-name">Supervisor</div>
+        <span class="pattern-tag" style="background:rgba(239,68,68,.15);color:#FCA5A5">MULTI-AGENT</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">One supervisor LLM routes between specialist agents. Each specialist is a subgraph. Supervisor decides who acts next until FINISH. Best for heterogeneous tasks.</div>
+        <div class="pattern-diagram"><span class="dn">START</span>→<span class="dn">[supervisor]</span>→<span class="dn">[researcher]</span>→back
+                      <span class="de">↑</span>         →<span class="dn">[coder]</span>    →back
+                      <span class="de">└──────────</span>→<span class="dc">FINISH</span>→<span class="dn">END</span></div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">supervisor.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">for</span> member <span class="kw">in</span> members:
+    builder.<span class="fn">add_node</span>(member, <span class="fn">make_worker</span>(member))
+    builder.<span class="fn">add_edge</span>(member, <span class="st">"supervisor"</span>)
+
+builder.<span class="fn">add_conditional_edges</span>(<span class="st">"supervisor"</span>,
+    <span class="kw">lambda</span> s: s[<span class="st">"next"</span>],
+    {**{m:m <span class="kw">for</span> m <span class="kw">in</span> members}, <span class="st">"FINISH"</span>:<span class="cls">END</span>})</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- P5 Swarm -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">05</div>
+        <div class="pattern-name">Swarm (Handoff)</div>
+        <span class="pattern-tag" style="background:rgba(236,72,153,.15);color:#F9A8D4">DECENTRALISED</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Agents hand off to each other directly — no central supervisor. Each agent decides if it can handle or should transfer. More autonomous than supervisor pattern.</div>
+        <div class="pattern-diagram"><span class="dn">[triage]</span> ──handoff──→ <span class="dn">[billing]</span>
+     <span class="de">↑</span>             ──handoff──→ <span class="dn">[tech]</span>
+     <span class="de">└─────────────────────────</span></div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">swarm.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">from</span> langgraph_swarm <span class="kw">import</span> <span class="fn">create_swarm</span>, <span class="fn">create_handoff_tool</span>
+
+to_billing = <span class="fn">create_handoff_tool</span>(<span class="st">"billing_agent"</span>)
+to_tech    = <span class="fn">create_handoff_tool</span>(<span class="st">"tech_agent"</span>)
+
+swarm = <span class="fn">create_swarm</span>(
+    [triage, billing, tech],
+    default_active_agent=<span class="st">"triage_agent"</span>
+).<span class="fn">compile</span>(checkpointer=memory)</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- P6 HITL -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">06</div>
+        <div class="pattern-name">Human-in-the-Loop</div>
+        <span class="pattern-tag" style="background:rgba(245,158,11,.15);color:#FCD34D">APPROVAL GATE</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Graph pauses at interrupt point. Human reviews, edits state, approves. State persisted during wait — can be hours or days. Essential for high-stakes actions.</div>
+        <div class="pattern-diagram"><span class="dn">[agent]</span>→⏸ interrupt→<span class="dc">HUMAN REVIEWS</span>→resume→<span class="dn">[action]</span></div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">hitl.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre>graph = builder.<span class="fn">compile</span>(
+    checkpointer=memory,
+    interrupt_before=[<span class="st">"dangerous_action"</span>]
+)
+<span class="cm"># Run until interrupt</span>
+graph.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [task]}, config)
+<span class="cm"># Human reviews</span>
+graph.<span class="fn">get_state</span>(config)
+graph.<span class="fn">update_state</span>(config, {<span class="st">"plan"</span>: safer})
+<span class="cm"># Resume</span>
+graph.<span class="fn">invoke</span>(<span class="kw">None</span>, config)</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- P7 Parallel -->
+    <div class="pattern-card" style="grid-column:1/-1">
+      <div class="pattern-header">
+        <div class="pattern-num">07</div>
+        <div class="pattern-name">Parallelism (Map-Reduce)</div>
+        <span class="pattern-tag" style="background:rgba(34,211,238,.15);color:#67E8F9">FAN-OUT / FAN-IN</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Fan out to N parallel branches using Send(). Each branch runs simultaneously. Fan-in aggregates all results. Massively reduces latency for independent subtasks — N subtasks in time of 1.</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">parallel.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">from</span> langgraph.types <span class="kw">import</span> <span class="cls">Send</span>
+
+<span class="cm"># Fan-out: spawn N parallel branches dynamically from a list</span>
+<span class="kw">def</span> <span class="fn">fan_out</span>(state):
+    <span class="kw">return</span> [<span class="cls">Send</span>(<span class="st">"process_item"</span>, {<span class="st">"item"</span>: item})
+            <span class="kw">for</span> item <span class="kw">in</span> state[<span class="st">"items"</span>]]   <span class="cm"># each item = one parallel branch</span>
+
+<span class="cm"># Each branch runs independently and in parallel</span>
+<span class="kw">def</span> <span class="fn">process_item</span>(state):
+    result = expensive_llm_call(state[<span class="st">"item"</span>])
+    <span class="kw">return</span> {<span class="st">"results"</span>: [result]}   <span class="cm"># Annotated reducer collects all</span>
+
+<span class="cm"># Fan-in: all results merged by reducer, then aggregated</span>
+<span class="kw">def</span> <span class="fn">aggregate</span>(state):
+    summary = summarise_llm.<span class="fn">invoke</span>(str(state[<span class="st">"results"</span>]))
+    <span class="kw">return</span> {<span class="st">"final_answer"</span>: summary}
+
+builder.<span class="fn">add_conditional_edges</span>(<span class="st">"router"</span>, <span class="fn">fan_out</span>)   <span class="cm"># returns list of Send()</span>
+builder.<span class="fn">add_edge</span>(<span class="st">"process_item"</span>, <span class="st">"aggregate"</span>)        <span class="cm"># all branches converge here</span></pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── MEMORY ── -->
+<div class="section" id="memory">
+  <div class="sec-header">
+    <div class="sec-num">04</div>
+    <div class="sec-title">Memory & State — Deep Dive</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="memory-grid">
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--cyan)">TYPE 1</div>
+      <div class="mem-title">In-Thread</div>
+      <div class="mem-desc">Message history within one conversation. Managed by checkpointer. Persists across runs for the same thread_id.</div>
+      <div class="mem-when">Use: conversation history within a session</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--blue)">TYPE 2</div>
+      <div class="mem-title">Cross-Thread</div>
+      <div class="mem-desc">Facts that persist across all conversations for a user. Stored in external KV store. Thread A can read what Thread B learned.</div>
+      <div class="mem-when">Use: user prefs, profile, facts across sessions</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--green)">TYPE 3</div>
+      <div class="mem-title">Semantic</div>
+      <div class="mem-desc">Past experiences stored as embeddings. Retrieved by cosine similarity. "What do I know relevant to this query?" — nearest neighbour search.</div>
+      <div class="mem-when">Use: large memory corpus, relevance-based recall</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--amber)">TYPE 4</div>
+      <div class="mem-title">Episodic</div>
+      <div class="mem-desc">Records of past task executions: input + actions + outcome. Retrieved as few-shot examples. Agent improves automatically over time.</div>
+      <div class="mem-when">Use: agent learns from past task runs</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--violet)">TYPE 5</div>
+      <div class="mem-title">Procedural</div>
+      <div class="mem-desc">System prompt updates based on learned rules. The agent's "habits" baked into the prompt. Requires a memory extraction step.</div>
+      <div class="mem-when">Use: persistent behavioural rules for the agent</div>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><span class="code-lang">python</span><span class="code-file">full_memory_system.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="kw">from</span> langgraph.store.memory  <span class="kw">import</span> <span class="cls">InMemoryStore</span>
+<span class="kw">from</span> langchain_openai         <span class="kw">import</span> <span class="cls">OpenAIEmbeddings</span>
+
+<span class="cm"># ── Cross-thread store (Types 2–5) ────────────────────────────</span>
+store = <span class="cls">InMemoryStore</span>(
+    index={                                           <span class="cm"># add this for semantic search</span>
+        <span class="st">"embed"</span>:  <span class="cls">OpenAIEmbeddings</span>(model=<span class="st">"text-embedding-3-small"</span>),
+        <span class="st">"dims"</span>:   <span class="num">1536</span>,
+        <span class="st">"fields"</span>: [<span class="st">"fact"</span>]
+    }
+)
+
+<span class="cm"># ── Save a memory (cross-thread) ─────────────────────────────</span>
+<span class="kw">async def</span> <span class="fn">save_memory</span>(user_id, fact):
+    <span class="kw">await</span> store.<span class="fn">aput</span>(
+        namespace=(user_id, <span class="st">"facts"</span>),
+        key=<span class="fn">str</span>(<span class="fn">uuid4</span>()),
+        value={<span class="st">"fact"</span>: fact, <span class="st">"ts"</span>: <span class="fn">now</span>().<span class="fn">isoformat</span>()}
+    )
+
+<span class="cm"># ── Semantic search — relevance-based retrieval ───────────────</span>
+<span class="kw">async def</span> <span class="fn">search_memories</span>(user_id, query):
+    <span class="kw">return</span> <span class="kw">await</span> store.<span class="fn">asearch</span>(
+        namespace=(user_id, <span class="st">"facts"</span>),
+        query=query,     <span class="cm"># embedded + cosine similarity</span>
+        limit=<span class="num">5</span>
+    )
+
+<span class="cm"># ── Memory load node (runs at start of every invocation) ──────</span>
+<span class="kw">async def</span> <span class="fn">load_memory_node</span>(state, *, store):
+    memories = <span class="kw">await</span> store.<span class="fn">asearch</span>((state[<span class="st">"user_id"</span>], <span class="st">"facts"</span>))
+    context  = <span class="st">"\n"</span>.<span class="fn">join</span>([m.value[<span class="st">"fact"</span>] <span class="kw">for</span> m <span class="kw">in</span> memories])
+    <span class="kw">return</span> {<span class="st">"memory_context"</span>: context}
+
+<span class="cm"># ── Memory save node (runs at end of every invocation) ────────</span>
+<span class="kw">async def</span> <span class="fn">save_memory_node</span>(state, *, store):
+    new_facts = <span class="kw">await</span> extractor_llm.<span class="fn">ainvoke</span>(state[<span class="st">"messages"</span>])
+    <span class="kw">for</span> fact <span class="kw">in</span> new_facts:
+        <span class="kw">await</span> <span class="fn">save_memory</span>(state[<span class="st">"user_id"</span>], fact)
+
+<span class="cm"># ── Compile with BOTH checkpointer + store ────────────────────</span>
+graph = builder.<span class="fn">compile</span>(checkpointer=postgres_cp, store=store)
+<span class="cm">#   checkpointer = in-thread memory (Type 1)</span>
+<span class="cm">#   store        = cross-thread memory (Types 2–5)</span></pre>
+  </div>
+</div>
+
+<!-- ── PROJECTS ── -->
+<div class="section" id="projects">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div class="sec-title">12 Projects — Beginner → Expert</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="projects-list" id="proj-list">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ── PRODUCTION ── -->
+<div class="section" id="production">
+  <div class="sec-header">
+    <div class="sec-num">06</div>
+    <div class="sec-title">Production Deployment</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><span class="code-lang">python</span><span class="code-file">production_patterns.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="kw">from</span> langgraph.pregel <span class="kw">import</span> <span class="cls">RetryPolicy</span>
+<span class="kw">import</span> os
+
+<span class="cm"># ── LangSmith tracing — 3 lines, enable from day 1 ───────────</span>
+os.environ[<span class="st">"LANGCHAIN_TRACING_V2"</span>] = <span class="st">"true"</span>
+os.environ[<span class="st">"LANGCHAIN_API_KEY"</span>]     = <span class="st">"lsv2_..."</span>
+os.environ[<span class="st">"LANGCHAIN_PROJECT"</span>]     = <span class="st">"supplier-agent-prod"</span>
+
+<span class="cm"># ── Retry policy on LLM nodes ─────────────────────────────────</span>
+builder.<span class="fn">add_node</span>(<span class="st">"llm"</span>, <span class="fn">llm_node</span>,
+    retry=<span class="cls">RetryPolicy</span>(max_attempts=<span class="num">3</span>, retry_on=<span class="cls">RateLimitError</span>))
+
+<span class="cm"># ── Resume from checkpoint — no progress lost ─────────────────</span>
+<span class="cm"># Same thread_id + crash → resumes from last successful step</span>
+graph.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [msg]}, config)  <span class="cm"># crashes at step 3</span>
+graph.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [msg]}, config)  <span class="cm"># auto-resumes from step 3</span>
+
+<span class="cm"># ── Time travel — replay from any past checkpoint ─────────────</span>
+history   = list(graph.<span class="fn">get_state_history</span>(config))
+past_conf = history[<span class="num">5</span>].config
+graph.<span class="fn">invoke</span>(<span class="kw">None</span>, past_conf)   <span class="cm"># replay from step 5</span>
+
+<span class="cm"># ── Tag runs for LangSmith filtering ──────────────────────────</span>
+config = {
+    <span class="st">"configurable"</span>: {<span class="st">"thread_id"</span>: thread_id},
+    <span class="st">"tags"</span>:         [<span class="st">"production"</span>, <span class="st">"v2.1"</span>],
+    <span class="st">"metadata"</span>:     {<span class="st">"user_id"</span>: uid, <span class="st">"feature"</span>: <span class="st">"enrichment"</span>}
+}</pre>
+  </div>
+
+  <div style="margin-top:24px">
+    <div class="sec-header" style="margin-bottom:20px">
+      <div class="sec-title" style="font-size:20px">Production Checklist</div>
+    </div>
+    <div class="checklist">
+      <div class="check-item"><span class="ci">✓</span>PostgresSaver — not MemorySaver (lost on restart)</div>
+      <div class="check-item"><span class="ci">✓</span>thread_id: user_id + session_id + feature name</div>
+      <div class="check-item"><span class="ci">✓</span>RetryPolicy on all LLM nodes — RateLimit + ServiceUnavailable</div>
+      <div class="check-item"><span class="ci">✓</span>Max iteration guard in every loop — counter in state</div>
+      <div class="check-item"><span class="ci">✓</span>LangSmith tracing + tags + metadata from day 1</div>
+      <div class="check-item"><span class="ci">✓</span>Eval suite: 50 golden test cases, run on every deploy</div>
+      <div class="check-item"><span class="ci">✓</span>Token cost tracking — alert on per-node spend spikes</div>
+      <div class="check-item"><span class="ci">✓</span>Checkpoint TTL — expire old threads, don't store forever</div>
+      <div class="check-item"><span class="ci">✓</span>Per-node timeout — don't let one slow tool block everything</div>
+      <div class="check-item"><span class="ci">✓</span>Health check — graph.get_state() on a known test thread</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESOURCES ── -->
+<div class="section" id="resources">
+  <div class="sec-header">
+    <div class="sec-num">07</div>
+    <div class="sec-title">Complete Resource Library</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Official Documentation</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/concepts" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">LangGraph Concepts</div><div class="res-desc">Read fully before any tutorial. Unusually well-written. The mental model you need.</div><div class="res-url">langchain-ai.github.io/langgraph/concepts</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/tutorials/introduction" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">LangGraph Quickstart</div><div class="res-desc">First working agent in 30 min. Type every line yourself, don't copy-paste.</div><div class="res-url">langchain-ai.github.io/langgraph/tutorials/introduction</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/concepts/memory" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Memory Concepts — All 5 Types</div><div class="res-desc">Definitive guide. Read before Project 9.</div><div class="res-url">langchain-ai.github.io/langgraph/concepts/memory</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Human-in-the-Loop How-To</div><div class="res-desc">interrupt_before, update_state, time travel. Read before Project 5.</div><div class="res-url">langchain-ai.github.io/langgraph/how-tos/human_in_the_loop</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/how-tos/map-reduce" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Map-Reduce / Parallelism</div><div class="res-desc">Send() API. The canonical example. Read before Project 6.</div><div class="res-url">langchain-ai.github.io/langgraph/how-tos/map-reduce</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/how-tos/subgraph" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Subgraphs — Compose Graphs</div><div class="res-desc">Compiled graph as a node in parent graph. Essential for multi-agent. Read before P8.</div><div class="res-url">langchain-ai.github.io/langgraph/how-tos/subgraph</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/how-tos/streaming-tokens" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Streaming — astream_events</div><div class="res-desc">Token streaming, event types, SSE integration. Read before P10.</div><div class="res-url">langchain-ai.github.io/langgraph/how-tos/streaming-tokens</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/how-tos/cross-thread-persistence" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Cross-Thread Persistence</div><div class="res-desc">Store patterns with working examples. Read before P2.</div><div class="res-url">langchain-ai.github.io/langgraph/how-tos/cross-thread-persistence</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Code Repositories</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://github.com/langchain-ai/langgraph/tree/main/examples" target="_blank"><span class="res-badge rb-code">CODE</span><div class="res-info"><div class="res-title">LangGraph Official Examples</div><div class="res-desc">All patterns with working notebooks. Reference AFTER you build your own.</div><div class="res-url">github.com/langchain-ai/langgraph/tree/main/examples</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://github.com/langchain-ai/langgraph/blob/main/libs/langgraph/langgraph/pregel/__init__.py" target="_blank"><span class="res-badge rb-code">CODE</span><div class="res-info"><div class="res-title">LangGraph Source: pregel.py</div><div class="res-desc">The execution engine. Read this to truly understand how graphs run. Expert move.</div><div class="res-url">github.com/langchain-ai/langgraph (pregel/__init__.py)</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://github.com/langchain-ai/langmem" target="_blank"><span class="res-badge rb-code">CODE</span><div class="res-info"><div class="res-title">LangMem — Memory Management</div><div class="res-desc">Semantic search, episodic memory, memory extraction. Use for P9+.</div><div class="res-url">github.com/langchain-ai/langmem</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://github.com/langchain-ai/langchain-mcp-adapters" target="_blank"><span class="res-badge rb-code">CODE</span><div class="res-info"><div class="res-title">langchain-mcp-adapters</div><div class="res-desc">Convert MCP tools to LangChain tools. MultiServerMCPClient. Use for P11.</div><div class="res-url">github.com/langchain-ai/langchain-mcp-adapters</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://github.com/langchain-ai/langgraph-swarm-py" target="_blank"><span class="res-badge rb-code">CODE</span><div class="res-info"><div class="res-title">LangGraph Swarm</div><div class="res-desc">Handoff pattern implementation. Read source to understand the mechanism.</div><div class="res-url">github.com/langchain-ai/langgraph-swarm-py</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Videos — Watch In Order</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://youtube.com/watch?v=R8KB-Zcynxc" target="_blank"><span class="res-badge rb-video">VIDEO</span><div class="res-info"><div class="res-title">LangGraph: Multi-Agent Workflows — Official</div><div class="res-desc">38min · Core mental model: state machine, nodes, edges. Watch first.</div><div class="res-url">youtube.com/watch?v=R8KB-Zcynxc</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://youtube.com/watch?v=aHkz8aGHG5Q" target="_blank"><span class="res-badge rb-video">VIDEO</span><div class="res-info"><div class="res-title">LangGraph Tutorial — FreeCodeCamp (3h)</div><div class="res-desc">Comprehensive. Builds multiple agents. Watch after reading docs.</div><div class="res-url">youtube.com/watch?v=aHkz8aGHG5Q</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://youtube.com/playlist?list=PLfaIDFEXuae16n2TWUkKq5PgJ0w6Pkwtg" target="_blank"><span class="res-badge rb-video">VIDEO</span><div class="res-info"><div class="res-title">LangGraph Official Course Playlist</div><div class="res-desc">One concept per video. Work through all of them in order.</div><div class="res-url">youtube.com/playlist?list=PLfaIDFEXuae16n2TWUkKq5PgJ0w6Pkwtg</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://youtube.com/watch?v=hvAPnpSfSGo" target="_blank"><span class="res-badge rb-video">VIDEO</span><div class="res-info"><div class="res-title">Multi-Agent Architectures Deep Dive</div><div class="res-desc">Supervisor, swarm, hierarchical. Watch before P8.</div><div class="res-url">youtube.com/watch?v=hvAPnpSfSGo</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://youtube.com/watch?v=d9UHSzMK8aQ" target="_blank"><span class="res-badge rb-video">VIDEO</span><div class="res-info"><div class="res-title">Memory and Persistence in LangGraph</div><div class="res-desc">All memory types with live code demo. Watch before P9.</div><div class="res-url">youtube.com/watch?v=d9UHSzMK8aQ</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Blogs & Deep Reading</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://blog.langchain.dev/langgraph-v0-2" target="_blank"><span class="res-badge rb-blog">BLOG</span><div class="res-info"><div class="res-title">LangGraph v0.2 — Design Decisions</div><div class="res-desc">Why this state machine model? Framework philosophy. Read in Week 1.</div><div class="res-url">blog.langchain.dev/langgraph-v0-2</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://blog.langchain.dev/memory-for-agents" target="_blank"><span class="res-badge rb-blog">BLOG</span><div class="res-info"><div class="res-title">Memory for Agents — LangChain Blog</div><div class="res-desc">All 5 types with practical guidance. Dense with production insights. Read before P9.</div><div class="res-url">blog.langchain.dev/memory-for-agents</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://anthropic.com/engineering/building-effective-agents" target="_blank"><span class="res-badge rb-blog">BLOG</span><div class="res-info"><div class="res-title">Building Effective Agents — Anthropic</div><div class="res-desc">Framework-agnostic agent patterns. Validates everything you're learning here.</div><div class="res-url">anthropic.com/engineering/building-effective-agents</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://applied-llms.org" target="_blank"><span class="res-badge rb-blog">BLOG</span><div class="res-info"><div class="res-title">A Year of Building with LLMs — Applied LLMs</div><div class="res-desc">Production lessons from practitioners. Best blog for P12 and beyond.</div><div class="res-url">applied-llms.org</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Tools</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://smith.langchain.com" target="_blank"><span class="res-badge rb-tool">TOOL</span><div class="res-info"><div class="res-title">LangSmith — Tracing & Eval</div><div class="res-desc">Enable from day 1. Free personal account. Every node, token, tool call visible.</div><div class="res-url">smith.langchain.com</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://langchain-ai.github.io/langgraph/cloud" target="_blank"><span class="res-badge rb-tool">TOOL</span><div class="res-info"><div class="res-title">LangGraph Cloud</div><div class="res-desc">Managed deployment. Git-push, built-in persistence + streaming + HITL.</div><div class="res-url">langchain-ai.github.io/langgraph/cloud</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://github.com/explodinggradients/ragas" target="_blank"><span class="res-badge rb-tool">TOOL</span><div class="res-info"><div class="res-title">RAGAS — LLM Evaluation</div><div class="res-desc">faithfulness, relevance, groundedness. Use for golden test suite scoring.</div><div class="res-url">github.com/explodinggradients/ragas</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ── READING ORDER ── -->
+<div class="section" id="reading">
+  <div class="sec-header">
+    <div class="sec-num">08</div>
+    <div class="sec-title">Reading Order</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="reading-order">
+    <div class="ro-row">
+      <div class="ro-before">Before P1</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/concepts" target="_blank">LangGraph Concepts docs</a>
+          <a href="https://youtube.com/watch?v=R8KB-Zcynxc" target="_blank">Official intro video (YouTube)</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P2</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/cross-thread-persistence" target="_blank">Cross-thread persistence how-to</a>
+          <a href="https://langchain-ai.github.io/langgraph/concepts/memory" target="_blank">Memory concepts page</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P3</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/tutorials/rag/langgraph_adaptive_rag" target="_blank">Adaptive RAG tutorial</a>
+          <a href="https://blog.langchain.dev/agentic-rag-with-langgraph" target="_blank">Self-RAG blog post</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P4</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/tutorials/reflection/reflection" target="_blank">Reflection agent how-to</a>
+          <a href="https://langchain-ai.github.io/langgraph/concepts/agentic_concepts" target="_blank">Agentic Concepts doc</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P5</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop" target="_blank">HITL how-to</a>
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/time-travel" target="_blank">Time travel how-to</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P6</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/map-reduce" target="_blank">Map-reduce how-to — Send() API</a>
+          <a href="https://github.com/langchain-ai/langgraph/blob/main/examples/parallelization.ipynb" target="_blank">Parallelism example notebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P7</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-execute" target="_blank">Plan-and-execute official tutorial</a>
+          <a href="https://arxiv.org/abs/2312.04511" target="_blank">LLM Compiler paper (arXiv)</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P8</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/subgraph" target="_blank">Subgraphs how-to</a>
+          <a href="https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor" target="_blank">Supervisor multi-agent tutorial</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P9</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/concepts/memory" target="_blank">Memory concepts page</a>
+          <a href="https://github.com/langchain-ai/langmem" target="_blank">LangMem README</a>
+          <a href="https://blog.langchain.dev/memory-for-agents" target="_blank">Memory for Agents blog</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P10</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/streaming-tokens" target="_blank">Streaming tokens how-to</a>
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/streaming-events-from-within-tools" target="_blank">astream_events reference</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P11</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://github.com/langchain-ai/langchain-mcp-adapters" target="_blank">langchain-mcp-adapters README</a>
+          <a href="https://modelcontextprotocol.io/docs" target="_blank">MCP protocol spec</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">Before P12</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://langchain-ai.github.io/langgraph/how-tos/deploy-self-hosted" target="_blank">Production deployment doc</a>
+          <a href="https://docs.smith.langchain.com/evaluation" target="_blank">LangSmith eval docs</a>
+          <a href="https://applied-llms.org" target="_blank">applied-llms.org</a>
+        </div>
+      </div>
+    </div>
+    <div class="ro-row">
+      <div class="ro-before">After all 12</div>
+      <div class="ro-read">
+        <div class="ro-links">
+          <a href="https://github.com/langchain-ai/langgraph/blob/main/libs/langgraph/langgraph/pregel/__init__.py" target="_blank">LangGraph source: pregel.py (execution engine)</a>
+          <a href="https://github.com/langchain-ai/langgraph/tree/main/examples" target="_blank">All official examples</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  LangGraph Mastery · Nitesh · Wayfair Findability Backend · Build every pattern. Own every primitive. Ship something real.
+</footer>
+
+</div><!-- end page -->
+
+<script>
+// ── Projects data ──────────────────────────────────────────────────────────────
+const PROJECTS = [
+  {
+    num:"01", title:"Basic ReAct Agent with Tool Calling", level:"BEGINNER", lv:"lv-b",
+    what:["ReAct agent: web search, calculator, Wikipedia tools","Conditional edge: tool_calls? → ToolNode → LLM → loop","MemorySaver checkpointer — conversation persists","Stream execution: graph.stream() to inspect each step"],
+    learn:["StateGraph, nodes, edges, START/END primitives","ToolNode and tool binding to LLM","thread_id + checkpointer pattern","Debug with stream() — see state at every node"],
+    chips:["StateGraph","ToolNode","MemorySaver","add_conditional_edges","stream()"],
+    deliverable:"react_agent.py — working CLI agent, 3 tools, conversation memory",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"LangGraph Quickstart Tutorial",desc:"First working agent. Type every line yourself.",url:"https://langchain-ai.github.io/langgraph/tutorials/introduction"},
+      {badge:"tb-video",label:"VIDEO",title:"LangGraph Multi-Agent Workflows (Official)",desc:"Core mental model walkthrough. Watch before coding.",url:"https://youtube.com/watch?v=R8KB-Zcynxc"},
+      {badge:"tb-code",label:"CODE",title:"ReAct prebuilt source",desc:"Read create_react_agent source to understand what's generated.",url:"https://github.com/langchain-ai/langgraph/blob/main/libs/prebuilt/langgraph/prebuilt/tool_node.py"},
+      {badge:"tb-docs",label:"DOCS",title:"How-to: Tool calling",desc:"Tool binding, ToolNode, handling tool errors.",url:"https://langchain-ai.github.io/langgraph/how-tos/tool-calling"},
+    ]
+  },
+  {
+    num:"02", title:"Conversational Agent with Persistent Memory", level:"BEGINNER", lv:"lv-b",
+    what:["Chat agent that remembers across sessions (not just within)","Cross-thread store: saves name, preferences, topics","Memory load node at graph start, save node at end","PostgresSaver for real persistence across restarts"],
+    learn:["InMemoryStore namespace pattern","checkpointer (in-thread) vs store (cross-thread) distinction","Memory extraction with LLM","When memory should and shouldn't load"],
+    chips:["InMemoryStore","store.aput/asearch","PostgresSaver","memory extraction","namespace"],
+    deliverable:"persistent_agent.py — truly remembers across sessions and restarts",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Cross-thread persistence how-to",desc:"store.aput, asearch, namespace patterns with examples.",url:"https://langchain-ai.github.io/langgraph/how-tos/cross-thread-persistence"},
+      {badge:"tb-docs",label:"DOCS",title:"Memory concepts — all 5 types",desc:"The definitive guide. Read before implementing anything.",url:"https://langchain-ai.github.io/langgraph/concepts/memory"},
+      {badge:"tb-code",label:"CODE",title:"LangMem examples",desc:"Memory extraction, semantic search examples.",url:"https://github.com/langchain-ai/langmem/tree/main/examples"},
+      {badge:"tb-blog",label:"BLOG",title:"Memory for Agents — LangChain Blog",desc:"Practical guide to all 5 memory types.",url:"https://blog.langchain.dev/memory-for-agents"},
+    ]
+  },
+  {
+    num:"03", title:"Document Research Agent (RAG + Agent)", level:"BEGINNER", lv:"lv-b",
+    what:["Agent queries document corpus via vector search tool","Tools: retrieve_docs, rerank, summarise","Agent decides when it has enough context to answer","Iterative retrieval: retrieve → find gap → retrieve more"],
+    learn:["Combining vector search with agent tool calling","When to retrieve vs when to answer directly","Grounding: cite sources in the final answer","Retrieval quality vs answer quality tradeoff"],
+    chips:["vector store tool","iterative retrieval","grounding","semantic store","InMemoryStore + embed"],
+    deliverable:"rag_agent.py — cites sources, iterates until confident, no hallucination",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Adaptive RAG tutorial",desc:"Iterative retrieval agent with grade + rewrite.",url:"https://langchain-ai.github.io/langgraph/tutorials/rag/langgraph_adaptive_rag"},
+      {badge:"tb-blog",label:"BLOG",title:"Agentic RAG with LangGraph",desc:"Self-RAG: agent decides when to retrieve.",url:"https://blog.langchain.dev/agentic-rag-with-langgraph"},
+      {badge:"tb-code",label:"CODE",title:"Adaptive RAG notebook",desc:"Working end-to-end example with grading and rewriting.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_adaptive_rag.ipynb"},
+    ]
+  },
+  {
+    num:"04", title:"Code Generation + Self-Debugging Agent", level:"INTERMEDIATE", lv:"lv-i",
+    what:["Agent generates code, executes in sandbox, reads error, fixes","Reflection loop: generate → execute → error? → fix → repeat","Max retries guard: iteration counter in state","Final output: working, explained code"],
+    learn:["Reflection / self-critique pattern","Execution feedback loop — error message as structured input","Guardrails: iteration counter prevents infinite loops","Code execution tool (subprocess / Docker sandbox)"],
+    chips:["reflection pattern","code execution","iteration guard","error feedback","self-critique"],
+    deliverable:"code_agent.py — generates + debugs until working, then explains",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Reflection agent how-to",desc:"Official reflection pattern with working code.",url:"https://langchain-ai.github.io/langgraph/tutorials/reflection/reflection"},
+      {badge:"tb-code",label:"CODE",title:"Code generation example notebook",desc:"Code assistant with self-correction loop.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/code_assistant/langgraph_code_assistant.ipynb"},
+      {badge:"tb-blog",label:"BLOG",title:"Self-correcting code generation",desc:"Production patterns for code generation agents.",url:"https://blog.langchain.dev/code-execution-with-langgraph"},
+    ]
+  },
+  {
+    num:"05", title:"Human-in-the-Loop Approval Workflow", level:"INTERMEDIATE", lv:"lv-i",
+    what:["Agent plans action, pauses for human approval","Human can approve, reject, or modify the plan","FastAPI endpoint to submit approvals async","State persisted during wait — hours or days fine"],
+    learn:["interrupt_before / interrupt_after compilation flags","graph.get_state() and graph.update_state() API","State persistence across long pauses","How to build approval UIs on top of LangGraph"],
+    chips:["interrupt_before","get_state","update_state","async resume","time travel"],
+    deliverable:"hitl_agent.py + FastAPI approval endpoint — full async approval workflow",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Human-in-the-loop how-to",desc:"interrupt_before, update_state, approve/reject patterns.",url:"https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop"},
+      {badge:"tb-docs",label:"DOCS",title:"Time travel how-to",desc:"Replay from any past checkpoint.",url:"https://langchain-ai.github.io/langgraph/how-tos/time-travel"},
+      {badge:"tb-code",label:"CODE",title:"HITL example notebook",desc:"Full approve/reject/edit workflow with FastAPI.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/human-in-the-loop.ipynb"},
+    ]
+  },
+  {
+    num:"06", title:"Parallel Research Pipeline (Map-Reduce)", level:"INTERMEDIATE", lv:"lv-i",
+    what:["Topic → N sub-questions generated dynamically","Each researched by independent parallel agent branch","All results aggregated + synthesised into final report","Benchmark: parallel vs sequential latency — measure the win"],
+    learn:["Send() for dynamic fan-out","Annotated reducers for collecting parallel results","Fan-in aggregation node","When parallelism helps vs when it adds overhead"],
+    chips:["Send()","Annotated reducer","dynamic fan-out","fan-in","parallel speedup"],
+    deliverable:"parallel_research.py — N parallel branches, timed benchmark showing speedup",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Map-reduce how-to",desc:"Send() API, canonical example. Essential read.",url:"https://langchain-ai.github.io/langgraph/how-tos/map-reduce"},
+      {badge:"tb-code",label:"CODE",title:"Parallelism example notebook",desc:"Working fan-out/fan-in implementation.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/parallelization.ipynb"},
+    ]
+  },
+  {
+    num:"07", title:"Plan-and-Execute Research Agent", level:"INTERMEDIATE", lv:"lv-i",
+    what:["Planner LLM creates multi-step plan (Pydantic structured output)","Executor runs each step with tools","Replanner adapts plan based on intermediate results","Synthesiser produces coherent final output"],
+    learn:["Plan-Execute-Replan loop implementation","Pydantic structured output for plan steps","How replanning improves robustness on real tasks","Qualitative comparison vs P6 parallel approach"],
+    chips:["Pydantic plan","past_steps reducer","replan loop","structured output"],
+    deliverable:"plan_execute.py — adaptive multi-step research, re-plans on failure",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Plan-and-execute tutorial",desc:"Official implementation walkthrough.",url:"https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-execute"},
+      {badge:"tb-code",label:"CODE",title:"Plan-execute example notebook",desc:"Full working implementation with replanner.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/plan-and-execute/plan-and-execute.ipynb"},
+      {badge:"tb-paper",label:"PAPER",title:"LLM Compiler — plan-based execution",desc:"Academic basis for plan-and-execute pattern.",url:"https://arxiv.org/abs/2312.04511"},
+    ]
+  },
+  {
+    num:"08", title:"Supervisor Multi-Agent System", level:"ADVANCED", lv:"lv-a",
+    what:["Supervisor LLM orchestrates Researcher, Analyst, Writer, Critic","Each specialist is a compiled subgraph","Supervisor routes based on full task state","Loop until supervisor decides FINISH"],
+    learn:["Subgraphs as nodes in parent graph","State schema compatibility across graph boundaries","Supervisor prompt engineering for reliable routing","Preventing infinite loops — FINISH condition design"],
+    chips:["subgraphs","supervisor routing","worker nodes","state inheritance","FINISH condition"],
+    deliverable:"supervisor_system.py — 4-agent system, full LangSmith trace visible",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Agent supervisor tutorial",desc:"Official multi-agent supervisor implementation.",url:"https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor"},
+      {badge:"tb-docs",label:"DOCS",title:"Subgraphs how-to",desc:"Compose graphs — compiled graph as node.",url:"https://langchain-ai.github.io/langgraph/how-tos/subgraph"},
+      {badge:"tb-code",label:"CODE",title:"Supervisor example notebook",desc:"Complete working 3-agent supervisor system.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/multi_agent/agent_supervisor.ipynb"},
+      {badge:"tb-video",label:"VIDEO",title:"Multi-agent architectures deep dive",desc:"Supervisor, swarm, hierarchical patterns.",url:"https://youtube.com/watch?v=hvAPnpSfSGo"},
+    ]
+  },
+  {
+    num:"09", title:"Long-Term Memory Agent (Episodic + Semantic)", level:"ADVANCED", lv:"lv-a",
+    what:["Agent learns from every interaction, improves over time","Episodic: saves (task, approach, outcome) after each run","Semantic search: retrieves most relevant past episodes","Few-shot injection: past episodes in system prompt"],
+    learn:["LangMem for memory management","Embedding store + semantic search implementation","Memory consolidation: merge vs add new","Measuring: does episodic memory actually improve output?"],
+    chips:["LangMem","episodic memory","semantic search","few-shot from memory","memory consolidation"],
+    deliverable:"episodic_agent.py — measurably improves output quality with each run",
+    tutorials:[
+      {badge:"tb-code",label:"CODE",title:"LangMem — memory management library",desc:"Official library. README is the best guide.",url:"https://github.com/langchain-ai/langmem"},
+      {badge:"tb-docs",label:"DOCS",title:"Semantic search in store",desc:"Embedding index, asearch(query=) pattern.",url:"https://langchain-ai.github.io/langgraph/how-tos/memory/semantic-search"},
+      {badge:"tb-blog",label:"BLOG",title:"Memory for agents deep dive",desc:"All 5 types, implementation patterns.",url:"https://blog.langchain.dev/memory-for-agents"},
+      {badge:"tb-code",label:"CODE",title:"LangMem examples",desc:"Working episodic and semantic memory examples.",url:"https://github.com/langchain-ai/langmem/tree/main/examples"},
+    ]
+  },
+  {
+    num:"10", title:"Streaming Agent with Real-Time UI", level:"ADVANCED", lv:"lv-a",
+    what:["Agent streams tokens + events to browser in real-time","FastAPI + SSE (Server-Sent Events) endpoint","Frontend: thinking, tool calls, results, answer — all live","Fully async graph: all nodes async, astream_events()"],
+    learn:["astream() vs astream_events() — when to use each","Event types: on_chat_model_stream, on_tool_start, on_tool_end","SSE protocol for server → browser push","Handling backpressure in async streaming pipelines"],
+    chips:["astream_events","SSE","FastAPI","event filtering","async graph","backpressure"],
+    deliverable:"streaming_agent.py + SSE endpoint — tokens appear in real-time in browser",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Streaming tokens how-to",desc:"astream, astream_events, event types.",url:"https://langchain-ai.github.io/langgraph/how-tos/streaming-tokens"},
+      {badge:"tb-docs",label:"DOCS",title:"Streaming events from within tools",desc:"How to surface tool-level events.",url:"https://langchain-ai.github.io/langgraph/how-tos/streaming-events-from-within-tools"},
+      {badge:"tb-code",label:"CODE",title:"Streaming example notebook",desc:"Working token streaming implementation.",url:"https://github.com/langchain-ai/langgraph/blob/main/examples/streaming-tokens.ipynb"},
+    ]
+  },
+  {
+    num:"11", title:"LangGraph + MCP Integration", level:"EXPERT", lv:"lv-e",
+    what:["Agent discovers and uses tools from MCP server at runtime","Dynamic tool loading: lists available MCP tools at start","Multi-MCP: agent connects to multiple servers simultaneously","Build custom MCP server exposing your own tools"],
+    learn:["langchain-mcp-adapters: MCP → LangChain tool conversion","MultiServerMCPClient for multiple concurrent servers","Dynamic vs static tool loading tradeoffs","MCP protocol — directly relevant to Findability-MCP-Server"],
+    chips:["langchain-mcp-adapters","MultiServerMCPClient","dynamic tools","MCP protocol","tool discovery"],
+    deliverable:"mcp_agent.py — connects to 2+ MCP servers, tools discovered at runtime",
+    tutorials:[
+      {badge:"tb-code",label:"CODE",title:"langchain-mcp-adapters",desc:"The library that makes MCP work with LangGraph.",url:"https://github.com/langchain-ai/langchain-mcp-adapters"},
+      {badge:"tb-docs",label:"DOCS",title:"MCP integration guide",desc:"LangGraph + MCP step by step.",url:"https://langchain-ai.github.io/langgraph/how-tos/mcp"},
+      {badge:"tb-docs",label:"DOCS",title:"MCP protocol specification",desc:"Read to understand what your MCP server implements.",url:"https://modelcontextprotocol.io/docs"},
+      {badge:"tb-code",label:"CODE",title:"MCP server examples",desc:"Reference MCP server implementations.",url:"https://github.com/modelcontextprotocol/servers"},
+    ]
+  },
+  {
+    num:"12", title:"Production Multi-Agent System — Full Stack", level:"EXPERT", lv:"lv-e",
+    what:["Full supervisor + worker multi-agent system","All 5 memory types wired in","HITL approval for high-stakes actions","Streaming UI + LangSmith tracing + eval suite"],
+    learn:["Composing all 7 patterns in one system","LangSmith: trace every node, token, tool call in production","LLM-as-judge eval — automated quality measurement","Failure recovery: RetryPolicy + fallback + checkpoint resume"],
+    chips:["all 7 patterns","LangSmith","LLM-as-judge","RetryPolicy","PostgresSaver","full eval suite"],
+    deliverable:"Full production system with RFC, eval suite, cost dashboard, and runbook",
+    tutorials:[
+      {badge:"tb-docs",label:"DOCS",title:"Self-hosted deployment",desc:"LangGraph server in Docker on GCP/GKE.",url:"https://langchain-ai.github.io/langgraph/how-tos/deploy-self-hosted"},
+      {badge:"tb-docs",label:"DOCS",title:"LangSmith evaluation",desc:"Golden datasets, LLM-as-judge, regression testing.",url:"https://docs.smith.langchain.com/evaluation"},
+      {badge:"tb-blog",label:"BLOG",title:"A year of building with LLMs",desc:"Best production reference for everything in P12.",url:"https://applied-llms.org"},
+      {badge:"tb-code",label:"CODE",title:"LangGraph Cloud",desc:"Managed deployment option — read docs.",url:"https://langchain-ai.github.io/langgraph/cloud"},
+    ]
+  },
+];
+
+// ── Render projects ────────────────────────────────────────────────────────────
+function renderProjects(){
+  const container = document.getElementById('proj-list');
+  container.innerHTML = PROJECTS.map(p => `
+    <div class="proj" id="proj-${p.num}">
+      <div class="proj-head" onclick="toggleProj('${p.num}')">
+        <div class="proj-num">P${p.num}</div>
+        <div class="proj-title">${p.title}</div>
+        <span class="proj-level ${p.lv}">${p.level}</span>
+        <div class="proj-chevron">›</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-grid">
+          <div>
+            <div class="proj-section-label" style="color:var(--green)">⚒ BUILD</div>
+            <ul class="plist">${p.what.map(w=>`<li>${w}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <div class="proj-section-label" style="color:var(--blue)">🧠 LEARN</div>
+            <ul class="plist">${p.learn.map(l=>`<li>${l}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <div class="chips">${p.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+        <div class="deliverable">
+          <div class="del-icon">✅</div>
+          <div><div class="del-label">Deliverable</div><div class="del-text">${p.deliverable}</div></div>
+        </div>
+        <div class="tutorials">
+          <div class="tut-header">📚 Tutorials & Artifacts</div>
+          <div class="tut-list">
+            ${p.tutorials.map(t=>`
+              <div class="tut-item">
+                <span class="tut-badge ${t.badge}">${t.label}</span>
+                <div class="tut-info">
+                  <div class="tut-title">${t.title}</div>
+                  <div class="tut-desc">${t.desc}</div>
+                  <a class="tut-link" href="${t.url}" target="_blank">${t.url.replace('https://','')}</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleProj(num){
+  const el = document.getElementById(`proj-${num}`);
+  el.classList.toggle('open');
+}
+
+// ── Nav active state ───────────────────────────────────────────────────────────
+function updateNav(){
+  const sections = ['plan','internals','patterns','memory','projects','production','resources','reading'];
+  const links = document.querySelectorAll('.nav-link');
+  let current = sections[0];
+  sections.forEach(id => {
+    const el = document.getElementById(id) || document.querySelector('.hero');
+    if(el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#'+current);
+  });
+}
+
+// ── Copy code ──────────────────────────────────────────────────────────────────
+function copyCode(btn){
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='copied!';
+    setTimeout(()=>btn.textContent='copy',2000);
+  });
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+renderProjects();
+window.addEventListener('scroll', updateNav, {passive:true});
+</script>
+</body>
+</html>
