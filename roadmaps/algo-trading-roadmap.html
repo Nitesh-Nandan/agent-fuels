@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algo Trading Mastery — Nitesh's Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F8FAFC;--s1:#FFFFFF;--s2:#FFFFFF;--s3:#F1F5F9;--s4:#E2E8F0;
+  --border:#E2E8F0;--border2:#CBD5E1;
+  --cyan:#0891B2;--blue:#2563EB;--violet:#7C3AED;
+  --green:#059669;--amber:#D97706;--red:#DC2626;--pink:#DB2777;
+  --orange:#EA580C;--lime:#65A30D;--teal:#0D9488;
+  --text:#0F172A;--dim:#475569;--muted:#94A3B8;
+  --code:#1E293B;--cg:#4ADE80;--cb:#60A5FA;--cp:#C084FC;--co:#FB923C;--cr:#F87171;--cm:#94A3B8;--cy:#34D399;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.15}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;height:56px;gap:0}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--teal);letter-spacing:2px;margin-right:40px;white-space:nowrap}
+.nav-links{display:flex;gap:0;overflow-x:auto;flex:1}
+.nav-links::-webkit-scrollbar{height:0}
+.nav-link{font-size:12.5px;color:var(--dim);padding:0 16px;height:56px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;text-decoration:none}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{color:var(--teal);border-bottom-color:var(--teal)}
+
+/* ── Layout ── */
+.page{position:relative;z-index:1}
+
+/* ── Hero ── */
+.hero{padding:80px 60px 60px;max-width:1200px;margin:0 auto;position:relative}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal)}
+.hero h1{font-family:'Clash Display',sans-serif;font-size:clamp(52px,7vw,88px);font-weight:700;line-height:1.0;color:var(--text);margin-bottom:24px}
+.hero h1 .accent{color:var(--teal);display:block}
+.hero-sub{font-size:18px;color:var(--dim);line-height:1.7;max-width:640px;margin-bottom:40px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hstat{display:flex;flex-direction:column;gap:4px}
+.hstat-v{font-family:'Clash Display',sans-serif;font-size:36px;font-weight:700;color:var(--text);line-height:1}
+.hstat-l{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+
+/* ── Sections ── */
+.section{padding:60px;max-width:1200px;margin:0 auto}
+.section+.section{padding-top:0}
+.sec-header{display:flex;align-items:center;gap:16px;margin-bottom:36px}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px}
+.sec-title{font-family:'Clash Display',sans-serif;font-size:32px;font-weight:700;color:var(--text)}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+
+/* ── Phase cards ── */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.phase-card{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.phase-card:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ph1::before{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.ph2::before{background:linear-gradient(90deg,var(--teal),var(--green))}
+.ph3::before{background:linear-gradient(90deg,var(--violet),var(--pink))}
+.ph4::before{background:linear-gradient(90deg,var(--amber),var(--orange))}
+.ph5::before{background:linear-gradient(90deg,var(--red),var(--pink))}
+.ph6::before{background:linear-gradient(90deg,var(--cyan),var(--teal))}
+.phase-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.phase-weeks{font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px}
+.phase-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px}
+.phase-desc{font-size:12.5px;color:var(--dim);line-height:1.6}
+
+/* ── Code blocks ── */
+.code-wrap{background:var(--code);border:1px solid #334155;border-radius:10px;overflow:hidden;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#0F172A;border-bottom:1px solid #334155}
+.code-lang{font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;letter-spacing:1px;text-transform:uppercase}
+.code-file{font-family:'JetBrains Mono',monospace;font-size:10px;color:#7DD3FC}
+.code-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:#64748B;cursor:pointer;padding:2px 8px;border:1px solid #334155;border-radius:3px;background:transparent;transition:all .15s}
+.code-copy:hover{color:#7DD3FC;border-color:#7DD3FC}
+pre{padding:18px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;tab-size:4;color:#E2E8F0}
+.kw{color:var(--cr)} .fn{color:var(--cb)} .cls{color:var(--co)} .st{color:var(--cg)} .cm{color:var(--cm);font-style:italic} .tp{color:var(--cp)} .num{color:var(--co)} .dc{color:var(--cy)}
+
+/* ── Concept cards (like memory cards) ── */
+.concept-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.concept-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px}
+.concept-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+.mem-card{background:#FFFFFF;border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .2s;cursor:default;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mem-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.mem-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;margin-bottom:8px}
+.mem-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.mem-desc{font-size:11.5px;color:var(--dim);line-height:1.55}
+.mem-when{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ── Projects (lessons) ── */
+.projects-list{display:flex;flex-direction:column;gap:16px}
+.proj{background:#FFFFFF;border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.proj:hover{border-color:var(--border2);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.proj-head{display:flex;align-items:center;gap:14px;padding:18px 24px;cursor:pointer;user-select:none;background:#FFFFFF;transition:background .15s}
+.proj-head:hover{background:#F8FAFC}
+.proj-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;width:36px;flex-shrink:0}
+.proj-title{font-size:16px;font-weight:700;color:var(--text);flex:1}
+.proj-level{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:700;flex-shrink:0}
+.lv-f{background:rgba(8,145,178,.12);color:#164E63}
+.lv-b{background:rgba(5,150,105,.12);color:#065F46}
+.lv-i{background:rgba(217,119,6,.12);color:#92400E}
+.lv-a{background:rgba(124,58,237,.12);color:#4C1D95}
+.lv-e{background:rgba(220,38,38,.12);color:#7F1D1D}
+.proj-phase{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0}
+.proj-chevron{color:var(--muted);transition:transform .25s;font-size:18px;flex-shrink:0}
+.proj.open .proj-chevron{transform:rotate(90deg)}
+.proj-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border);background:#FFFFFF}
+.proj.open .proj-body{display:block}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.proj-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.plist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.plist li{font-size:13px;color:var(--dim);padding-left:16px;position:relative;line-height:1.5}
+.plist li::before{content:'›';position:absolute;left:0;color:var(--muted);font-weight:700}
+.plist li strong{color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--dim);background:#F1F5F9}
+
+/* ── Deliverable ── */
+.deliverable{background:linear-gradient(135deg,rgba(13,148,136,.06),rgba(8,145,178,.06));border:1px solid rgba(13,148,136,.25);border-radius:10px;padding:14px 18px;margin-top:12px;display:flex;gap:12px;align-items:flex-start}
+.del-icon{font-size:18px;flex-shrink:0}
+.del-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.del-text{font-size:13.5px;color:var(--text);font-weight:500}
+
+/* ── Resources ── */
+.res-section{margin-bottom:40px}
+.res-section-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.res-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.res-cards{display:flex;flex-direction:column;gap:8px}
+.res-card{display:flex;align-items:flex-start;gap:12px;background:#FFFFFF;border:1px solid var(--border);border-radius:8px;padding:12px 16px;text-decoration:none;transition:all .15s}
+.res-card:hover{border-color:var(--teal);background:#F0FDFA;transform:translateX(4px)}
+.res-badge{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;border-radius:4px;font-weight:700;flex-shrink:0;margin-top:1px;letter-spacing:1px;text-transform:uppercase}
+.rb-docs{background:rgba(37,99,235,.1);color:#1E3A8A}
+.rb-code{background:rgba(5,150,105,.1);color:#064E3B}
+.rb-blog{background:rgba(217,119,6,.1);color:#78350F}
+.rb-tool{background:rgba(8,145,178,.1);color:#164E63}
+.rb-book{background:rgba(124,58,237,.1);color:#3B0764}
+.rb-video{background:rgba(220,38,38,.1);color:#991B1B}
+.res-info{flex:1}
+.res-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:3px}
+.res-desc{font-size:12px;color:var(--muted);line-height:1.45}
+.res-url{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);margin-top:3px}
+.res-arrow{color:var(--muted);align-self:center;font-size:18px;flex-shrink:0}
+
+/* ── Reading order ── */
+.reading-order{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.ro-row{display:flex;align-items:stretch;border-bottom:1px solid var(--border)}
+.ro-row:last-child{border-bottom:none}
+.ro-row:hover{background:#F1F5F9}
+.ro-before{padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);font-weight:700;width:180px;flex-shrink:0;border-right:1px solid var(--border);display:flex;align-items:center;background:#F8FAFC}
+.ro-read{padding:12px 20px;font-size:13px;color:var(--dim);display:flex;align-items:center;flex:1;line-height:1.5}
+
+/* ── Checklist ── */
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#FFFFFF;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--dim)}
+.check-item .ci{color:var(--green);flex-shrink:0;font-size:16px;margin-top:1px}
+
+/* ── Mindset cards ── */
+.mindset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.mindset-card{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mindset-icon{font-size:24px;margin-bottom:12px}
+.mindset-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px}
+.mindset-body{font-size:12.5px;color:var(--dim);line-height:1.6}
+
+/* ── Pattern diagrams ── */
+.patterns-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pattern-card{background:#FFFFFF;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.pattern-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#F8FAFC}
+.pattern-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px}
+.pattern-name{font-size:16px;font-weight:700;color:var(--text);flex:1}
+.pattern-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:700}
+.pattern-body{padding:16px 20px}
+.pattern-when{font-size:12.5px;color:var(--dim);margin-bottom:12px;line-height:1.5}
+.pattern-diagram{background:#1E293B;border-radius:6px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#94A3B8;line-height:1.8;margin-bottom:12px;overflow-x:auto}
+.pattern-diagram .dn{color:var(--co)}
+.pattern-diagram .de{color:var(--cb)}
+.pattern-diagram .dc{color:var(--cp)}
+.pattern-diagram .dg{color:var(--cg)}
+
+/* ── Footer ── */
+footer{padding:40px 60px;border-top:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);background:#FFFFFF}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#F1F5F9}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp .6s ease both}
+.hero>*:nth-child(1){animation-delay:.1s}
+.hero>*:nth-child(2){animation-delay:.2s}
+.hero>*:nth-child(3){animation-delay:.3s}
+.hero>*:nth-child(4){animation-delay:.4s}
+
+@media(max-width:900px){
+  .phases{grid-template-columns:1fr 1fr}
+  .patterns-grid{grid-template-columns:1fr}
+  .concept-grid{grid-template-columns:1fr 1fr}
+  .concept-grid-5{grid-template-columns:1fr 1fr}
+  .concept-grid-3{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .checklist{grid-template-columns:1fr}
+  .mindset-grid{grid-template-columns:1fr}
+  .section{padding:40px 20px}
+  .hero{padding:60px 20px 40px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">▲ NSE ALGO</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#plan">Plan</a>
+    <a class="nav-link" href="#mindset">Mindset</a>
+    <a class="nav-link" href="#indicators">Indicators</a>
+    <a class="nav-link" href="#strategies">Strategies</a>
+    <a class="nav-link" href="#lessons">15 Lessons</a>
+    <a class="nav-link" href="#backtest">Backtesting</a>
+    <a class="nav-link" href="#execution">Live Execution</a>
+    <a class="nav-link" href="#resources">Resources</a>
+    <a class="nav-link" href="#reading">Reading Order</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero" id="plan">
+  <div class="hero-eyebrow">NSE · Swing + Intraday · Algo Trading · Nitesh</div>
+  <h1>Algo Trading<span class="accent">Mastery.</span></h1>
+  <div class="hero-sub">Everything in one place — market foundations, all 8 indicator families, 6 strategy archetypes, 15 escalating lessons, backtesting framework, live execution on Kite + Upstox, and the analytical mindset of a trading engineer. Learn the edge. Build the system.</div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-v">6</div><div class="hstat-l">Phases</div></div>
+    <div class="hstat"><div class="hstat-v">15</div><div class="hstat-l">Lessons</div></div>
+    <div class="hstat"><div class="hstat-v">8</div><div class="hstat-l">Indicator Families</div></div>
+    <div class="hstat"><div class="hstat-v">6</div><div class="hstat-l">Strategy Archetypes</div></div>
+    <div class="hstat"><div class="hstat-v">2</div><div class="hstat-l">Broker APIs</div></div>
+  </div>
+</div>
+
+<!-- ── PHASES ── -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num">01</div>
+    <div class="sec-title">The 6-Phase Learning Arc</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="phases">
+    <div class="phase-card ph1">
+      <div class="phase-label">Phase 1 · Foundations</div>
+      <div class="phase-weeks">Lessons 1–3</div>
+      <div class="phase-title">Reading the Market</div>
+      <div class="phase-desc">Candlesticks, OHLC, price action, support & resistance, volume, and market structure. No code yet — your eyes learn to read price first. NSE-specific: NIFTY structure, IST session, circuit breakers.</div>
+    </div>
+    <div class="phase-card ph2">
+      <div class="phase-label">Phase 2 · Indicators</div>
+      <div class="phase-weeks">Lessons 4–6</div>
+      <div class="phase-title">Measuring the Market</div>
+      <div class="phase-desc">All 8 indicator families: trend, momentum, volatility, volume, breadth, oscillators, structure, and composite. Every indicator: formula first, manual dry run on real NIFTY data, then Python with pandas-ta.</div>
+    </div>
+    <div class="phase-card ph3">
+      <div class="phase-label">Phase 3 · Strategy</div>
+      <div class="phase-weeks">Lessons 7–9</div>
+      <div class="phase-title">Finding Your Edge</div>
+      <div class="phase-desc">6 strategy archetypes — trend-following, mean reversion, breakout, momentum, VWAP/intraday, and multi-factor swing. Rule-based thinking: entry, exit, stop-loss, and position sizing as deterministic logic.</div>
+    </div>
+    <div class="phase-card ph4">
+      <div class="phase-label">Phase 4 · Backtesting</div>
+      <div class="phase-weeks">Lessons 10–11</div>
+      <div class="phase-title">Proving the Edge</div>
+      <div class="phase-desc">Walk-forward testing, out-of-sample validation, statistical significance, overfitting detection, Sharpe/Sortino/Calmar ratios, and Monte Carlo simulation. Upstox historical data pipeline for NSE stocks.</div>
+    </div>
+    <div class="phase-card ph5">
+      <div class="phase-label">Phase 5 · Execution</div>
+      <div class="phase-weeks">Lessons 12–13</div>
+      <div class="phase-title">Building the Machine</div>
+      <div class="phase-desc">Kite Connect + Upstox API integration. Event-driven order engine with asyncio. Real-time data feed, signal pipeline, order types, slippage modelling, and paper trading on live market data before going live.</div>
+    </div>
+    <div class="phase-card ph6">
+      <div class="phase-label">Phase 6 · Production</div>
+      <div class="phase-weeks">Lessons 14–15</div>
+      <div class="phase-title">Running the System</div>
+      <div class="phase-desc">PnL dashboard, circuit breakers, max drawdown kill switch, Telegram alerts, portfolio-level risk controls, SEBI/broker compliance, live deployment with small capital, and the iteration flywheel for compounding.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MINDSET ── -->
+<div class="section" id="mindset">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div class="sec-title">The Trading Engineer Mindset</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="mindset-grid">
+    <div class="mindset-card">
+      <div class="mindset-icon">🔬</div>
+      <div class="mindset-title">Hypothesis → Test → Measure</div>
+      <div class="mindset-body">Every strategy is a hypothesis. You don't "believe" in it — you test it on historical data, measure its edge, and deploy only when the statistics are in your favour. Intuition is a starting point, not a trading decision.</div>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-icon">⚙️</div>
+      <div class="mindset-title">Rules, Not Feelings</div>
+      <div class="mindset-body">The enemy of retail traders is discretion during execution. Your algo does exactly what the backtest says — no "but the market feels different today". If a rule needs overriding, change the rule, retest, then deploy.</div>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-icon">📉</div>
+      <div class="mindset-title">Risk First, Returns Second</div>
+      <div class="mindset-body">Every trade is sized by how much you can lose, not how much you can gain. Max 1–2% of capital at risk per trade. The math of compounding means avoiding catastrophic loss matters far more than maximising any one win.</div>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-icon">🔁</div>
+      <div class="mindset-title">The Iteration Flywheel</div>
+      <div class="mindset-body">Live → observe → identify drift → update strategy → backtest → paper trade → deploy. The edge degrades over time as the market adapts. Your system is never "done" — it's always in version N+1.</div>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-icon">📊</div>
+      <div class="mindset-title">Expectancy is Everything</div>
+      <div class="mindset-body">Expectancy = (Win% × Avg Win) − (Loss% × Avg Loss). A 40% win rate can be highly profitable if avg win is 3× avg loss. Focus on expectancy and sample size, not on any single trade's outcome.</div>
+    </div>
+    <div class="mindset-card">
+      <div class="mindset-icon">🛡️</div>
+      <div class="mindset-title">Compounding Requires Survival</div>
+      <div class="mindset-body">A 50% drawdown requires a 100% gain to recover. You are a retail investor compounding capital — your primary job is to not blow up. Small, consistent, system-generated returns beat occasional big wins every time.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INDICATORS ── -->
+<div class="section" id="indicators">
+  <div class="sec-header">
+    <div class="sec-num">03</div>
+    <div class="sec-title">8 Indicator Families — Deep Dive</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--blue)">FAMILY 1</div>
+      <div class="mem-title">Trend</div>
+      <div class="mem-desc">EMA (9,21,50,200), SMA, DEMA, TEMA, Supertrend, Ichimoku Cloud, Parabolic SAR. Answers: <em>which direction is price moving?</em></div>
+      <div class="mem-when">Use: trade in direction of trend, avoid counter-trend</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--amber)">FAMILY 2</div>
+      <div class="mem-title">Momentum</div>
+      <div class="mem-desc">RSI, MACD, Stochastic, ROC, Williams %R, TSI. Answers: <em>how strong is the current move?</em></div>
+      <div class="mem-when">Use: entries, divergence signals, overbought/oversold</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--red)">FAMILY 3</div>
+      <div class="mem-title">Volatility</div>
+      <div class="mem-desc">ATR, Bollinger Bands, Keltner Channels, Historical Volatility, IV (from NSE options chain). Answers: <em>how much is price moving?</em></div>
+      <div class="mem-when">Use: stop-loss sizing, breakout confirmation, regime detection</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--teal)">FAMILY 4</div>
+      <div class="mem-title">Volume</div>
+      <div class="mem-desc">VWAP, OBV, Volume Profile, VPOC, CMF, MFI, AD Line. Answers: <em>is price moving on conviction?</em></div>
+      <div class="mem-when">Use: intraday anchoring, breakout quality, institutional activity</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--violet)">FAMILY 5</div>
+      <div class="mem-title">Structure</div>
+      <div class="mem-desc">Support/Resistance levels, pivot points, supply/demand zones, swing highs/lows via argrelextrema, Order Blocks. Answers: <em>where will price react?</em></div>
+      <div class="mem-when">Use: entries near structure, targets at next structure</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--green)">FAMILY 6</div>
+      <div class="mem-title">Oscillators</div>
+      <div class="mem-desc">CCI, DPO, Ultimate Oscillator, Aroon, DMI/ADX. Answers: <em>is price in a range or trending?</em></div>
+      <div class="mem-when">Use: regime filter — only trend strategies when ADX &gt; 25</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--orange)">FAMILY 7</div>
+      <div class="mem-title">Market Breadth</div>
+      <div class="mem-desc">Advance/Decline ratio, NIFTY PCR (Put/Call Ratio), FII/DII data, India VIX, sector rotation. Answers: <em>is the whole market healthy?</em></div>
+      <div class="mem-when">Use: macro filter — avoid longs when breadth deteriorates</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--pink)">FAMILY 8</div>
+      <div class="mem-title">Composite / Multi-factor</div>
+      <div class="mem-desc">Z-score ranking, custom scoring functions, factor combinations. Answers: <em>which stock is best right now across all signals?</em></div>
+      <div class="mem-when">Use: stock selection for swing universe, portfolio ranking</div>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><span class="code-lang">python</span><span class="code-file">indicator_stack.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="kw">import</span> pandas_ta <span class="kw">as</span> ta
+<span class="kw">import</span> yfinance <span class="kw">as</span> yf
+<span class="kw">from</span> scipy.signal <span class="kw">import</span> <span class="fn">argrelextrema</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Pull NSE data ─────────────────────────────────────────────</span>
+df = yf.<span class="fn">download</span>(<span class="st">"RELIANCE.NS"</span>, period=<span class="st">"1y"</span>, interval=<span class="st">"1d"</span>)
+
+<span class="cm"># ── Trend ─────────────────────────────────────────────────────</span>
+df[<span class="st">'ema9'</span>]   = ta.<span class="fn">ema</span>(df[<span class="st">'Close'</span>], length=<span class="num">9</span>)
+df[<span class="st">'ema21'</span>]  = ta.<span class="fn">ema</span>(df[<span class="st">'Close'</span>], length=<span class="num">21</span>)
+df[<span class="st">'ema200'</span>] = ta.<span class="fn">ema</span>(df[<span class="st">'Close'</span>], length=<span class="num">200</span>)
+df[<span class="st">'supertrend'</span>] = ta.<span class="fn">supertrend</span>(df[<span class="st">'High'</span>], df[<span class="st">'Low'</span>], df[<span class="st">'Close'</span>])[<span class="st">'SUPERTd_7_3.0'</span>]
+
+<span class="cm"># ── Momentum ──────────────────────────────────────────────────</span>
+df[<span class="st">'rsi'</span>]  = ta.<span class="fn">rsi</span>(df[<span class="st">'Close'</span>], length=<span class="num">14</span>)
+macd     = ta.<span class="fn">macd</span>(df[<span class="st">'Close'</span>])
+df[<span class="st">'macd'</span>], df[<span class="st">'macd_signal'</span>] = macd[<span class="st">'MACD_12_26_9'</span>], macd[<span class="st">'MACDs_12_26_9'</span>]
+
+<span class="cm"># ── Volatility ────────────────────────────────────────────────</span>
+df[<span class="st">'atr'</span>] = ta.<span class="fn">atr</span>(df[<span class="st">'High'</span>], df[<span class="st">'Low'</span>], df[<span class="st">'Close'</span>], length=<span class="num">14</span>)
+bbands  = ta.<span class="fn">bbands</span>(df[<span class="st">'Close'</span>], length=<span class="num">20</span>, std=<span class="num">2</span>)
+df[<span class="st">'bb_upper'</span>], df[<span class="st">'bb_lower'</span>] = bbands[<span class="st">'BBU_20_2.0'</span>], bbands[<span class="st">'BBL_20_2.0'</span>]
+
+<span class="cm"># ── Volume ────────────────────────────────────────────────────</span>
+df[<span class="st">'vwap'</span>] = ta.<span class="fn">vwap</span>(df[<span class="st">'High'</span>], df[<span class="st">'Low'</span>], df[<span class="st">'Close'</span>], df[<span class="st">'Volume'</span>])
+df[<span class="st">'obv'</span>]  = ta.<span class="fn">obv</span>(df[<span class="st">'Close'</span>], df[<span class="st">'Volume'</span>])
+
+<span class="cm"># ── Structure — swing highs/lows via argrelextrema ────────────</span>
+highs = <span class="fn">argrelextrema</span>(df[<span class="st">'High'</span>].values, np.greater, order=<span class="num">5</span>)[<span class="num">0</span>]
+lows  = <span class="fn">argrelextrema</span>(df[<span class="st">'Low'</span>].values, np.less,    order=<span class="num">5</span>)[<span class="num">0</span>]
+<span class="cm"># order=5 → pivot is extreme in 11-candle window (5 left + pivot + 5 right)</span>
+
+<span class="cm"># ── Regime filter — only trend strategies when trending ───────</span>
+df[<span class="st">'adx'</span>] = ta.<span class="fn">adx</span>(df[<span class="st">'High'</span>], df[<span class="st">'Low'</span>], df[<span class="st">'Close'</span>], length=<span class="num">14</span>)[<span class="st">'ADX_14'</span>]
+df[<span class="st">'trending'</span>] = df[<span class="st">'adx'</span>] &gt; <span class="num">25</span>   <span class="cm"># ADX &gt; 25 = meaningful trend</span></pre>
+  </div>
+</div>
+
+<!-- ── STRATEGIES ── -->
+<div class="section" id="strategies">
+  <div class="sec-header">
+    <div class="sec-num">04</div>
+    <div class="sec-title">6 Strategy Archetypes</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="patterns-grid">
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">01</div>
+        <div class="pattern-name">Trend Following</div>
+        <span class="pattern-tag" style="background:rgba(37,99,235,.12);color:#1E3A8A">SWING</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Ride the direction of the dominant trend. Buy pullbacks in uptrends, short rallies in downtrends. Works in trending markets (ADX &gt; 25). Loses in choppy sideways markets — always use regime filter.</div>
+        <div class="pattern-diagram"><span class="dg">ENTRY:</span>  Price &gt; EMA200 + EMA9 crosses above EMA21
+<span class="dg">FILTER:</span> ADX &gt; 25 (trending), RSI 40–65 (not overbought)
+<span class="dg">STOP:</span>   Below last swing low − 0.5×ATR
+<span class="dg">TARGET:</span> 2–3×ATR or next resistance level
+<span class="dg">SIZE:</span>   1% risk / (entry − stop) = shares</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">trend_strategy.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">trend_signal</span>(df):
+    signal = (
+        (df[<span class="st">'Close'</span>] &gt; df[<span class="st">'ema200'</span>]) &amp;  <span class="cm"># above long-term trend</span>
+        (df[<span class="st">'ema9'</span>] &gt; df[<span class="st">'ema21'</span>])   &amp;  <span class="cm"># short-term momentum up</span>
+        (df[<span class="st">'ema9'</span>].shift(<span class="num">1</span>) &lt; df[<span class="st">'ema21'</span>].shift(<span class="num">1</span>)) &amp;  <span class="cm"># crossover just happened</span>
+        (df[<span class="st">'adx'</span>] &gt; <span class="num">25</span>)             &amp;  <span class="cm"># trend is strong</span>
+        (df[<span class="st">'rsi'</span>].between(<span class="num">40</span>, <span class="num">65</span>))       <span class="cm"># not overbought</span>
+    )
+    stop  = df[<span class="st">'Low'</span>].rolling(<span class="num">10</span>).min() - <span class="num">0.5</span> * df[<span class="st">'atr'</span>]
+    <span class="kw">return</span> signal, stop</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">02</div>
+        <div class="pattern-name">Mean Reversion</div>
+        <span class="pattern-tag" style="background:rgba(13,148,136,.12);color:#134E4A">SWING + INTRADAY</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Price stretched too far from its mean — expect snap-back. Works in range-bound, low-ADX markets. Dangerous in strong trends. Always confirm with volume divergence — a weak bounce on low volume is not mean reversion.</div>
+        <div class="pattern-diagram"><span class="dg">ENTRY:</span>  Close &lt; BB lower + RSI &lt; 30 + volume &lt; avg
+<span class="dg">FILTER:</span> ADX &lt; 20 (ranging market, not trending)
+<span class="dg">STOP:</span>   1.5×ATR below entry
+<span class="dg">TARGET:</span> VWAP or BB middle band
+<span class="dg">AVOID:</span>  If strong catalyst exists (results, news)</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">mean_reversion.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">mean_rev_signal</span>(df):
+    oversold = (
+        (df[<span class="st">'Close'</span>] &lt; df[<span class="st">'bb_lower'</span>]) &amp;
+        (df[<span class="st">'rsi'</span>]   &lt; <span class="num">30</span>)              &amp;
+        (df[<span class="st">'adx'</span>]   &lt; <span class="num">20</span>)              &amp;  <span class="cm"># ranging, not trending</span>
+        (df[<span class="st">'Volume'</span>] &lt; df[<span class="st">'Volume'</span>].rolling(<span class="num">20</span>).mean())  <span class="cm"># quiet move</span>
+    )
+    target = df[<span class="st">'vwap'</span>]   <span class="cm"># or bb_middle = (bb_upper+bb_lower)/2</span>
+    stop   = df[<span class="st">'Close'</span>] - <span class="num">1.5</span> * df[<span class="st">'atr'</span>]
+    <span class="kw">return</span> oversold, target, stop</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">03</div>
+        <div class="pattern-name">Breakout</div>
+        <span class="pattern-tag" style="background:rgba(217,119,6,.12);color:#78350F">SWING + INTRADAY</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Price breaks through a key level with volume expansion. The structural level provides confluence — this isn't random noise. Volume confirmation is non-negotiable: a breakout on weak volume is a trap, not a signal.</div>
+        <div class="pattern-diagram"><span class="dg">ENTRY:</span>  Close &gt; resistance (argrelextrema) + vol &gt; 1.5× avg
+<span class="dg">CONFIRM:</span> RSI &gt; 50 + not at major round number S/R
+<span class="dg">STOP:</span>   Below the broken resistance level (now support)
+<span class="dg">TARGET:</span> Height of base added to breakout point
+<span class="dg">TRAP:</span>   Volume &lt; avg on breakout = likely fake-out</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">breakout.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">breakout_signal</span>(df, resistance_levels):
+    <span class="cm"># Find nearest resistance above current price</span>
+    near_res = [r <span class="kw">for</span> r <span class="kw">in</span> resistance_levels
+                <span class="kw">if</span> df[<span class="st">'Close'</span>].iloc[-<span class="num">2</span>] &lt; r &lt; df[<span class="st">'Close'</span>].iloc[-<span class="num">2</span>] * <span class="num">1.02</span>]
+    <span class="kw">if not</span> near_res:
+        <span class="kw">return False</span>
+    broke  = df[<span class="st">'Close'</span>].iloc[-<span class="num">1</span>] &gt; near_res[<span class="num">0</span>]
+    vol_ok = df[<span class="st">'Volume'</span>].iloc[-<span class="num">1</span>] &gt; df[<span class="st">'Volume'</span>].rolling(<span class="num">20</span>).mean().iloc[-<span class="num">1</span>] * <span class="num">1.5</span>
+    <span class="kw">return</span> broke <span class="kw">and</span> vol_ok</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">04</div>
+        <div class="pattern-name">VWAP Intraday</div>
+        <span class="pattern-tag" style="background:rgba(124,58,237,.12);color:#4C1D95">INTRADAY ONLY</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">VWAP is the institutional benchmark for intraday price. Price above VWAP = bullish intraday bias, below = bearish. Reversion to VWAP and rejection from it are both tradeable. VWAP resets daily — intraday only.</div>
+        <div class="pattern-diagram"><span class="dg">LONG:</span>   Price &gt; VWAP + pulls back to VWAP + bounces
+<span class="dg">SHORT:</span>  Price &lt; VWAP + rallies to VWAP + rejects
+<span class="dg">STOP:</span>   0.5×ATR beyond VWAP level
+<span class="dg">TARGET:</span> Prior intraday swing high/low
+<span class="dg">TIME:</span>   9:30–11:30 AM IST only (highest volume window)</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">vwap_strategy.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">vwap_bounce</span>(df_intraday):
+    <span class="cm"># df_intraday = 5-min bars, VWAP already computed</span>
+    above_vwap = df_intraday[<span class="st">'Close'</span>] &gt; df_intraday[<span class="st">'vwap'</span>]
+    pullback   = df_intraday[<span class="st">'Low'</span>] &lt;= df_intraday[<span class="st">'vwap'</span>] * <span class="num">1.001</span>
+    bounce     = df_intraday[<span class="st">'Close'</span>] &gt; df_intraday[<span class="st">'Open'</span>]  <span class="cm"># green candle</span>
+    rsi_ok     = df_intraday[<span class="st">'rsi'</span>].between(<span class="num">45</span>, <span class="num">60</span>)
+    session    = df_intraday.index.hour.isin([<span class="num">9</span>, <span class="num">10</span>, <span class="num">11</span>])    <span class="cm"># IST 9–11 AM</span>
+    <span class="kw">return</span> above_vwap &amp; pullback &amp; bounce &amp; rsi_ok &amp; session</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">05</div>
+        <div class="pattern-name">Opening Range Breakout (ORB)</div>
+        <span class="pattern-tag" style="background:rgba(220,38,38,.12);color:#7F1D1D">INTRADAY ONLY</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">The first 15–30 min of NSE session (9:15–9:30 or 9:15–9:45 AM IST) sets the opening range. A breakout above/below with volume often sets direction for the day. Simple, robust, heavily used by retail algos.</div>
+        <div class="pattern-diagram"><span class="dg">ORB HIGH:</span> Max of first 15-min candle(s) after 9:15 IST
+<span class="dg">ORB LOW:</span>  Min of first 15-min candle(s) after 9:15 IST
+<span class="dg">LONG:</span>    Close &gt; ORB High + Volume spike
+<span class="dg">STOP:</span>    ORB Low (or midpoint for tighter risk)
+<span class="dg">TARGET:</span>  1.5–2× range above ORB High</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">orb_strategy.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">def</span> <span class="fn">compute_orb</span>(df_5min):
+    <span class="cm"># df_5min index is datetime in IST</span>
+    market_open = df_5min.between_time(<span class="st">'09:15'</span>, <span class="st">'09:30'</span>)
+    orb_high = market_open[<span class="st">'High'</span>].max()
+    orb_low  = market_open[<span class="st">'Low'</span>].min()
+    orb_range = orb_high - orb_low
+
+    after_open = df_5min.between_time(<span class="st">'09:30'</span>, <span class="st">'14:00'</span>)
+    long_signal  = after_open[<span class="st">'Close'</span>] &gt; orb_high
+    <span class="kw">return</span> orb_high, orb_low, orb_range, long_signal</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">06</div>
+        <div class="pattern-name">Multi-factor Swing Rank</div>
+        <span class="pattern-tag" style="background:rgba(5,150,105,.12);color:#064E3B">SWING PORTFOLIO</span>
+      </div>
+      <div class="pattern-body">
+        <div class="pattern-when">Score a universe of NSE stocks across multiple factors. Rank them. Trade the top N. This is how quant funds think — no single indicator decides, a composite score does. Provides diversification and reduces single-stock risk.</div>
+        <div class="pattern-diagram"><span class="dg">FACTORS:</span> Momentum(RSI) + Trend(EMA) + Volume + Structure
+<span class="dg">SCORE:</span>   Weighted sum, z-score normalised per factor
+<span class="dg">UNIVERSE:</span> NIFTY 200 filtered: ADX&gt;20, ATR%&gt;1.5%, Vol&gt;5Cr
+<span class="dg">SELECT:</span>  Top 5–10 stocks by composite score
+<span class="dg">REBAL:</span>   Weekly (swing) or daily (aggressive swing)</div>
+        <div class="code-wrap">
+          <div class="code-top"><span class="code-lang">python</span><span class="code-file">multi_factor.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">from</span> scipy <span class="kw">import</span> stats
+
+<span class="kw">def</span> <span class="fn">score_stock</span>(df, w_mom=<span class="num">0.35</span>, w_trend=<span class="num">0.35</span>, w_vol=<span class="num">0.30</span>):
+    <span class="cm"># Each factor → z-score (comparable across stocks)</span>
+    mom_z   = stats.<span class="fn">zscore</span>(df[<span class="st">'rsi'</span>])
+    trend_z = stats.<span class="fn">zscore</span>(df[<span class="st">'Close'</span>] / df[<span class="st">'ema200'</span>])  <span class="cm"># % above 200 EMA</span>
+    vol_z   = stats.<span class="fn">zscore</span>(df[<span class="st">'Volume'</span>] / df[<span class="st">'Volume'</span>].rolling(<span class="num">20</span>).mean())
+    <span class="kw">return</span> w_mom * mom_z + w_trend * trend_z + w_vol * vol_z
+
+<span class="cm"># Score all stocks, take top 10</span>
+scores = {sym: <span class="fn">score_stock</span>(dfs[sym]).iloc[-<span class="num">1</span>] <span class="kw">for</span> sym <span class="kw">in</span> universe}
+top10  = sorted(scores, key=scores.get, reverse=<span class="kw">True</span>)[:<span class="num">10</span>]</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LESSONS ── -->
+<div class="section" id="lessons">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div class="sec-title">15 Lessons — Foundation → Live System</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="projects-list" id="proj-list"></div>
+</div>
+
+<!-- ── BACKTESTING ── -->
+<div class="section" id="backtest">
+  <div class="sec-header">
+    <div class="sec-num">06</div>
+    <div class="sec-title">Backtesting Framework</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="concept-grid-3">
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--blue)">METRIC 1</div>
+      <div class="mem-title">Sharpe Ratio</div>
+      <div class="mem-desc">(Mean Return − Risk-Free Rate) / Std Dev of Returns. Measures return per unit of risk. &gt;1 acceptable, &gt;2 good, &gt;3 excellent. Annualise by ×√252 for daily data.</div>
+      <div class="mem-when">Use: primary performance metric for all strategies</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--red)">METRIC 2</div>
+      <div class="mem-title">Max Drawdown</div>
+      <div class="mem-desc">Largest peak-to-trough decline. The most psychologically important metric — can you live through this drawdown in real capital without abandoning the system? If not, reduce position size.</div>
+      <div class="mem-when">Use: sizing and capital allocation decisions</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--amber)">METRIC 3</div>
+      <div class="mem-title">Calmar Ratio</div>
+      <div class="mem-desc">Annual Return / Max Drawdown. Better than Sharpe for retail — it shows return relative to the worst thing that can happen. &gt;1 is good. A 20% annual return with 40% max DD is a Calmar of 0.5 — not great.</div>
+      <div class="mem-when">Use: compare strategies with different drawdown profiles</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--teal)">METHOD 1</div>
+      <div class="mem-title">Walk-Forward Test</div>
+      <div class="mem-desc">Train on first 70%, optimise parameters, test on last 30%. Then slide the window. If out-of-sample performance collapses vs in-sample, you've overfit. The out-of-sample result is your true edge estimate.</div>
+      <div class="mem-when">Use: mandatory before any live deployment</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--violet)">METHOD 2</div>
+      <div class="mem-title">Monte Carlo</div>
+      <div class="mem-desc">Shuffle trade returns randomly, run 1000 simulations. Shows the distribution of possible outcomes — your 5th percentile drawdown is your worst-case planning number. Real edge shows up as a clear positive expectancy distribution.</div>
+      <div class="mem-when">Use: sizing position size and setting kill-switch thresholds</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--red)">TRAP 1</div>
+      <div class="mem-title">Overfitting</div>
+      <div class="mem-desc">Adding parameters until backtest looks perfect. Red flags: too many conditions, parameters optimised to &lt;5% tolerance, fewer than 30 trades in backtest. The curve-fit will fail on live data — guaranteed.</div>
+      <div class="mem-when">Simple rules with 100+ trades beat complex rules with 20</div>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><span class="code-lang">python</span><span class="code-file">backtest_engine.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="kw">from</span> backtesting <span class="kw">import</span> <span class="cls">Backtest</span>, <span class="cls">Strategy</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">class</span> <span class="cls">TrendStrategy</span>(<span class="cls">Strategy</span>):
+    ema_fast  = <span class="num">9</span>
+    ema_slow  = <span class="num">21</span>
+    rsi_low   = <span class="num">40</span>
+    risk_pct  = <span class="num">0.01</span>  <span class="cm"># 1% of capital at risk per trade</span>
+
+    <span class="kw">def</span> <span class="fn">init</span>(self):
+        self.fast = self.<span class="fn">I</span>(ta.ema, self.data.Close, self.ema_fast)
+        self.slow = self.<span class="fn">I</span>(ta.ema, self.data.Close, self.ema_slow)
+        self.rsi  = self.<span class="fn">I</span>(ta.rsi, self.data.Close, <span class="num">14</span>)
+        self.atr  = self.<span class="fn">I</span>(ta.atr, self.data.High, self.data.Low, self.data.Close, <span class="num">14</span>)
+
+    <span class="kw">def</span> <span class="fn">next</span>(self):
+        <span class="kw">if</span> self.fast[-<span class="num">1</span>] &gt; self.slow[-<span class="num">1</span>] <span class="kw">and</span> self.rsi[-<span class="num">1</span>] &gt; self.rsi_low:
+            stop   = self.data.Close[-<span class="num">1</span>] - <span class="num">1.5</span> * self.atr[-<span class="num">1</span>]
+            risk   = self.data.Close[-<span class="num">1</span>] - stop
+            shares = <span class="fn">int</span>((self.equity * self.risk_pct) / risk)
+            self.<span class="fn">buy</span>(size=shares, sl=stop)
+
+bt = <span class="cls">Backtest</span>(df, <span class="cls">TrendStrategy</span>, cash=<span class="num">100000</span>, commission=<span class="num">0.0003</span>)
+stats = bt.<span class="fn">run</span>()
+print(stats[[<span class="st">'Return [%]'</span>, <span class="st">'Sharpe Ratio'</span>, <span class="st">'Max. Drawdown [%]'</span>, <span class="st">'# Trades'</span>]])
+
+<span class="cm"># ── Walk-forward (out-of-sample) ──────────────────────────────</span>
+stats_wf = bt.<span class="fn">optimize</span>(
+    ema_fast=<span class="fn">range</span>(<span class="num">5</span>,<span class="num">15</span>), ema_slow=<span class="fn">range</span>(<span class="num">15</span>,<span class="num">30</span>),
+    maximize=<span class="st">'Sharpe Ratio'</span>,
+    constraint=<span class="kw">lambda</span> p: p.ema_fast &lt; p.ema_slow
+)</pre>
+  </div>
+</div>
+
+<!-- ── LIVE EXECUTION ── -->
+<div class="section" id="execution">
+  <div class="sec-header">
+    <div class="sec-num">07</div>
+    <div class="sec-title">Live Execution Architecture</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="concept-grid-5" style="grid-template-columns:repeat(5,1fr)">
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--teal)">LAYER 1</div>
+      <div class="mem-title">Data Feed</div>
+      <div class="mem-desc">Upstox/Kite WebSocket for real-time tick + OHLC. Convert to pandas DataFrame on each bar close. Handle reconnects automatically.</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--blue)">LAYER 2</div>
+      <div class="mem-title">Signal Engine</div>
+      <div class="mem-desc">Compute indicators on new bar. Evaluate strategy rules. Output: BUY / SELL / HOLD + quantity + stop price.</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--amber)">LAYER 3</div>
+      <div class="mem-title">Risk Gate</div>
+      <div class="mem-desc">Before every order: check daily loss limit, max open positions, margin available, and circuit-breaker state. Block order if any limit hit.</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--violet)">LAYER 4</div>
+      <div class="mem-title">Order Engine</div>
+      <div class="mem-desc">Place orders via Kite/Upstox API. Handle rejections, partial fills, and GTT orders. Log every order with timestamp, price, and reason.</div>
+    </div>
+    <div class="mem-card">
+      <div class="mem-num" style="color:var(--green)">LAYER 5</div>
+      <div class="mem-title">Monitor & Alert</div>
+      <div class="mem-desc">Live PnL dashboard. Telegram bot for fill confirmations and daily summary. Kill switch if drawdown > threshold.</div>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><span class="code-lang">python</span><span class="code-file">live_engine.py</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="kw">import</span> asyncio
+<span class="kw">from</span> kiteconnect <span class="kw">import</span> <span class="cls">KiteConnect</span>, <span class="cls">KiteTicker</span>
+<span class="kw">from</span> upstox_client <span class="kw">import</span> <span class="cls">ApiClient</span>, <span class="cls">Configuration</span>
+
+<span class="kw">class</span> <span class="cls">AlgoEngine</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, strategy, risk_config):
+        self.strategy    = strategy
+        self.risk        = risk_config
+        self.kite        = <span class="cls">KiteConnect</span>(api_key=<span class="st">"..."</span>)
+        self.daily_loss  = <span class="num">0</span>
+        self.open_trades = {}
+
+    <span class="kw">async def</span> <span class="fn">on_bar_close</span>(self, symbol, df):
+        <span class="cm"># Layer 2: compute signal</span>
+        signal, stop = self.strategy.<span class="fn">generate</span>(df)
+        <span class="kw">if not</span> signal:
+            <span class="kw">return</span>
+
+        <span class="cm"># Layer 3: risk gate — block if limits hit</span>
+        <span class="kw">if</span> self.daily_loss &lt; -self.risk[<span class="st">'max_daily_loss'</span>]:
+            <span class="kw">return</span>  <span class="cm"># circuit breaker</span>
+        <span class="kw">if</span> <span class="fn">len</span>(self.open_trades) &gt;= self.risk[<span class="st">'max_positions'</span>]:
+            <span class="kw">return</span>
+
+        <span class="cm"># Layer 4: place order</span>
+        price = df[<span class="st">'Close'</span>].iloc[-<span class="num">1</span>]
+        risk  = price - stop
+        qty   = <span class="fn">int</span>((self.risk[<span class="st">'capital'</span>] * <span class="num">0.01</span>) / risk)
+
+        order_id = self.kite.<span class="fn">place_order</span>(
+            variety=<span class="cls">KiteConnect</span>.VARIETY_REGULAR,
+            exchange=<span class="cls">KiteConnect</span>.EXCHANGE_NSE,
+            tradingsymbol=symbol,
+            transaction_type=<span class="cls">KiteConnect</span>.TRANSACTION_TYPE_BUY,
+            quantity=qty,
+            product=<span class="cls">KiteConnect</span>.PRODUCT_MIS,     <span class="cm"># intraday</span>
+            order_type=<span class="cls">KiteConnect</span>.ORDER_TYPE_MARKET,
+            stoploss=<span class="fn">round</span>(stop, <span class="num">2</span>)
+        )
+        self.open_trades[order_id] = {<span class="st">'symbol'</span>: symbol, <span class="st">'stop'</span>: stop, <span class="st">'qty'</span>: qty}
+        <span class="kw">await</span> self.<span class="fn">alert</span>(<span class="st">f"BUY {symbol} qty={qty} stop={stop:.2f}"</span>)
+
+    <span class="kw">async def</span> <span class="fn">alert</span>(self, msg):
+        <span class="cm"># Layer 5: Telegram notification</span>
+        <span class="kw">import</span> httpx
+        <span class="kw">await</span> httpx.<span class="cls">AsyncClient</span>().<span class="fn">post</span>(
+            <span class="st">f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"</span>,
+            json={<span class="st">"chat_id"</span>: CHAT_ID, <span class="st">"text"</span>: msg}
+        )</pre>
+  </div>
+</div>
+
+<!-- ── PRODUCTION ── -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num">08</div>
+    <div class="sec-title">Production Checklist</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="checklist">
+    <div class="check-item"><span class="ci">✓</span>Walk-forward tested — out-of-sample Sharpe &gt; 1.0 before any live capital</div>
+    <div class="check-item"><span class="ci">✓</span>Paper traded for minimum 20 trading sessions on live market data</div>
+    <div class="check-item"><span class="ci">✓</span>Daily max loss limit coded as hard circuit-breaker (not just a rule you follow)</div>
+    <div class="check-item"><span class="ci">✓</span>Max open positions enforced in risk gate layer — not in strategy logic</div>
+    <div class="check-item"><span class="ci">✓</span>All orders logged with timestamp, fill price, slippage vs expected</div>
+    <div class="check-item"><span class="ci">✓</span>Slippage and commissions included in backtest (Zerodha: ₹20/order flat)</div>
+    <div class="check-item"><span class="ci">✓</span>Position sizing by ATR-based risk, never fixed lot size</div>
+    <div class="check-item"><span class="ci">✓</span>Telegram/email alerts for every fill, error, and daily PnL summary</div>
+    <div class="check-item"><span class="ci">✓</span>Strategy assumes worst-case fill (market order slippage = +0.1% buffer)</div>
+    <div class="check-item"><span class="ci">✓</span>Monthly review: live performance vs backtest, edge decay detection</div>
+    <div class="check-item"><span class="ci">✓</span>SEBI: no intraday positions held overnight (MIS product auto-square-off)</div>
+    <div class="check-item"><span class="ci">✓</span>Kill switch tested — manually triggered to verify it actually stops trading</div>
+  </div>
+</div>
+
+<!-- ── RESOURCES ── -->
+<div class="section" id="resources">
+  <div class="sec-header">
+    <div class="sec-num">09</div>
+    <div class="sec-title">Resources</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Books</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://www.amazon.in/How-Make-Money-Stocks-Winning/dp/0071614133" target="_blank"><span class="res-badge rb-book">BOOK</span><div class="res-info"><div class="res-title">How to Make Money in Stocks — William O'Neil</div><div class="res-desc">CANSLIM framework. Best introduction to combining fundamentals with technical analysis for NSE stocks.</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://www.amazon.in/Trading-Systems-Methods-Wiley-Trading/dp/1119605355" target="_blank"><span class="res-badge rb-book">BOOK</span><div class="res-info"><div class="res-title">Trading Systems and Methods — Perry Kaufman</div><div class="res-desc">The bible of systematic trading. Every indicator, strategy archetype, and statistical testing method. Read chapters as you reach each phase.</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://www.amazon.in/Evidence-Based-Technical-Analysis-Scientific/dp/0470008741" target="_blank"><span class="res-badge rb-book">BOOK</span><div class="res-info"><div class="res-title">Evidence-Based Technical Analysis — David Aronson</div><div class="res-desc">Applies scientific method to TA. Teaches you to tell the difference between a real edge and statistical noise. Read before Phase 4.</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://www.amazon.in/Algorithmic-Trading-Winning-Strategies-Rationale/dp/1118460146" target="_blank"><span class="res-badge rb-book">BOOK</span><div class="res-info"><div class="res-title">Algorithmic Trading — Ernest Chan</div><div class="res-desc">Python-based quant strategies with real backtests. Closest to what you're building — retail systematic trading with real statistical rigour.</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Documentation &amp; APIs</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://kite.trade/docs/connect/v3/" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Kite Connect API v3 — Zerodha</div><div class="res-desc">Order placement, historical data, WebSocket ticks. Read the entire docs before Lesson 12. Understand rate limits.</div><div class="res-url">kite.trade/docs/connect/v3</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://upstox.com/developer/api-documentation/" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">Upstox Developer API</div><div class="res-desc">Historical data API (used for backtesting in course), live market feed, order APIs. Use for historical data from Lesson 4 onwards.</div><div class="res-url">upstox.com/developer/api-documentation</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://pandas-ta.readthedocs.io/en/latest/" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">pandas-ta Documentation</div><div class="res-desc">130+ technical indicators in one library. Reference every time you compute an indicator. Know the exact column names it returns.</div><div class="res-url">pandas-ta.readthedocs.io</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://kernc.github.io/backtesting.py/" target="_blank"><span class="res-badge rb-docs">DOCS</span><div class="res-info"><div class="res-title">backtesting.py Documentation</div><div class="res-desc">Clean Python backtesting framework. Used in Phase 4. Study the Strategy class and how to compute custom indicators with I().</div><div class="res-url">kernc.github.io/backtesting.py</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <div class="res-section-title">Tools</div>
+    <div class="res-cards">
+      <a class="res-card" href="https://chartink.com" target="_blank"><span class="res-badge rb-tool">TOOL</span><div class="res-info"><div class="res-title">ChartInk — NSE Stock Screener</div><div class="res-desc">NSE-specific screener with 100+ technical conditions. Use to validate your screener logic before coding it in Python.</div><div class="res-url">chartink.com</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://www.nseindia.com/market-data/live-equity-market" target="_blank"><span class="res-badge rb-tool">TOOL</span><div class="res-info"><div class="res-title">NSE India — Official Market Data</div><div class="res-desc">FII/DII data, option chain (PCR), India VIX, circuit filter lists. Use daily for macro/breadth context.</div><div class="res-url">nseindia.com/market-data</div></div><div class="res-arrow">→</div></a>
+      <a class="res-card" href="https://opstra.definedge.com" target="_blank"><span class="res-badge rb-tool">TOOL</span><div class="res-info"><div class="res-title">Opstra — Options Analytics</div><div class="res-desc">India VIX term structure, options Greeks, OI analysis. Use when adding options-based regime filters in Phase 3+.</div><div class="res-url">opstra.definedge.com</div></div><div class="res-arrow">→</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ── READING ORDER ── -->
+<div class="section" id="reading">
+  <div class="sec-header">
+    <div class="sec-num">10</div>
+    <div class="sec-title">Reading Order</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="reading-order">
+    <div class="ro-row"><div class="ro-before">Before L1</div><div class="ro-read">NSE India market structure page — understand circuit breakers, lot sizes, and IST session timings</div></div>
+    <div class="ro-row"><div class="ro-before">Before L4</div><div class="ro-read">pandas-ta docs — skim all available indicators, know what families exist before computing any</div></div>
+    <div class="ro-row"><div class="ro-before">Before L5</div><div class="ro-read">Evidence-Based Technical Analysis (Ch 1–4) — how to distinguish real edge from random pattern</div></div>
+    <div class="ro-row"><div class="ro-before">Before L7</div><div class="ro-read">Ernest Chan — Algorithmic Trading Ch 1–3 (mean reversion vs momentum classification)</div></div>
+    <div class="ro-row"><div class="ro-before">Before L10</div><div class="ro-read">backtesting.py full docs + examples — understand the Strategy class lifecycle before coding backtests</div></div>
+    <div class="ro-row"><div class="ro-before">Before L11</div><div class="ro-read">Ernest Chan — Ch 6 (statistical testing) + Aronson Ch 7 (data snooping bias)</div></div>
+    <div class="ro-row"><div class="ro-before">Before L12</div><div class="ro-read">Kite Connect docs (full, cover to cover) + Upstox WebSocket API reference</div></div>
+    <div class="ro-row"><div class="ro-before">Before L14</div><div class="ro-read">SEBI circular on algo trading for retail investors (2022) — know what's allowed and what requires approval</div></div>
+    <div class="ro-row"><div class="ro-before">Ongoing</div><div class="ro-read">NSE FII/DII data daily + India VIX + NIFTY PCR — 5-minute morning ritual before market open</div></div>
+  </div>
+</div>
+
+<footer>
+  ▲ NSE Algo Trading Mastery · Nitesh · Built with precision, tested with data, deployed with discipline.
+</footer>
+
+</div><!-- .page -->
+
+<script>
+const PROJECTS = [
+  {
+    num:"01", title:"Candlesticks, OHLC & Price Action", level:"FOUNDATION", lv:"lv-f", phase:"Phase 1",
+    what:["Pull NIFTY50 and 5 NSE stocks via yfinance (.NS suffix)","Plot interactive candlestick charts with mplfinance","Identify and annotate: Doji, Hammer, Engulfing, Shooting Star","Compute OHLC manually — understand what each value represents","Detect volume spikes and correlate with candle type"],
+    learn:["OHLC is a compressed representation of all price activity in a period","Candlestick patterns are probability tilts, not certainties — always confirm with next candle","Volume is the conviction behind price movement — pattern without volume is noise","yfinance .NS suffix is mandatory for NSE — RELIANCE.NS not RELIANCE"],
+    chips:["yfinance","mplfinance","OHLC","candlestick patterns","NSE .NS suffix","volume"],
+    deliverable:"nse_chart.py — interactive candlestick chart for any NSE stock with pattern annotations",
+    resources:[]
+  },
+  {
+    num:"02", title:"Support, Resistance & Market Structure", level:"FOUNDATION", lv:"lv-f", phase:"Phase 1",
+    what:["Compute swing highs/lows with argrelextrema (order=5 and order=10 — understand the difference)","Build a S&R level filter: proximity, touch count, timeframe confirmation","Detect trend structure: Higher Highs/Higher Lows vs Lower Highs/Lower Lows","Visualise S/R zones on chart with shaded regions","Build intraday stock selection framework: liquidity + ATR% + structure proximity"],
+    learn:["argrelextrema(order=5) means pivot is the highest/lowest in an 11-candle window — understand sliding window mechanics","ATR is a 14-day smoothed average, not a single-day figure — 'today's ATR' is shorthand, not literal","True Range captures gaps that High-Low misses — why ATR is superior to simple range","S/R from multi-year data requires filtering or you drown in noise"],
+    chips:["argrelextrema","scipy","ATR","True Range","swing highs/lows","S&R filtering","HH/HL structure"],
+    deliverable:"support_resistance.py — S/R levels with touch count filter + ATR-based stock screener",
+    resources:[]
+  },
+  {
+    num:"03", title:"Volume Analysis & Market Microstructure", level:"FOUNDATION", lv:"lv-f", phase:"Phase 1",
+    what:["Compute OBV (On-Balance Volume) and explain divergence from price","Build Volume Profile (VPOC, Value Area High/Low) for intraday data","Understand FII/DII flow data from NSE and how to read it programmatically","Compute relative volume: today's volume vs 20-day average","NSE-specific: circuit breakers, pre-open session, bulk/block deals"],
+    learn:["Volume confirms price — a breakout on 3× average volume is categorically different from one on 0.5× volume","OBV divergence (price making new highs but OBV not) is a leading warning sign","FII are the big players on NSE — their net activity is publicly available next-day and is a macro filter","Circuit breakers halt trading — your algo must handle this gracefully (no open orders during halt)"],
+    chips:["OBV","Volume Profile","VPOC","FII/DII","relative volume","circuit breakers","NSE microstructure"],
+    deliverable:"volume_analysis.py — OBV divergence scanner + relative volume filter for NSE universe",
+    resources:[]
+  },
+  {
+    num:"04", title:"Trend & Momentum Indicators", level:"BEGINNER", lv:"lv-b", phase:"Phase 2",
+    what:["Implement EMA (9,21,50,200), DEMA, TEMA — understand why DEMA/TEMA respond faster","Compute MACD: understand the 3 components (line, signal, histogram) separately","RSI from scratch: manual Wilder smoothing, then validate with pandas-ta","Supertrend indicator: ATR-based dynamic support/resistance with direction signal","Build an EMA crossover alert system for NIFTY 200 universe"],
+    learn:["EMA weighs recent prices more — the 'lag' of a 200 EMA is intentional, it filters noise","MACD histogram crossing zero is a different (and earlier) signal than MACD crossing signal line — know both","RSI > 70 doesn't mean sell — in strong trends RSI stays overbought for weeks. Context matters","Supertrend is ATR × multiplier above/below price — changing multiplier changes sensitivity"],
+    chips:["EMA","DEMA","TEMA","MACD","RSI","Wilder smoothing","Supertrend","pandas-ta","ema_crossover"],
+    deliverable:"trend_momentum.py — EMA crossover + MACD + RSI composite signal for NSE stocks",
+    resources:[]
+  },
+  {
+    num:"05", title:"Volatility, Bollinger Bands & ATR Deep Dive", level:"BEGINNER", lv:"lv-b", phase:"Phase 2",
+    what:["Build ATR from scratch: True Range → Wilder smoothing — verify every step","Bollinger Bands: understand what %B and Band Width tell you beyond upper/lower bands","Keltner Channels: ATR-based alternative to BBands — compare and contrast","Volatility regime detection: low vol (contraction) → high vol (expansion) pattern","Bollinger Band squeeze: a measured silence before a breakout"],
+    learn:["ATR consumed vs ATR remaining for intraday trade viability — is there room left in this move?","BB squeeze (narrowing bands) means energy is coiling — it's a setup for a breakout in either direction, not a signal itself","Keltner Channels use ATR for bands — more adaptive to volatility regime than fixed-std BBands","Volatility is mean-reverting — high vol follows low vol follows high vol"],
+    chips:["ATR","True Range","Bollinger Bands","%B","BandWidth","Keltner","BB squeeze","volatility regime"],
+    deliverable:"volatility_suite.py — ATR from scratch + BB squeeze scanner + volatility regime classifier",
+    resources:[]
+  },
+  {
+    num:"06", title:"VWAP, Volume Profile & Breadth Indicators", level:"BEGINNER", lv:"lv-b", phase:"Phase 2",
+    what:["Compute VWAP for intraday 5-min data with correct daily anchor reset","Build Volume Profile: bin prices into levels, find VPOC and Value Area","India VIX via yfinance (^INDIAVIX) — understand fear/greed implications","NIFTY PCR (Put/Call Ratio) from NSE options data — macro sentiment signal","Advance/Decline ratio for NIFTY 50 universe — market breadth as a filter"],
+    learn:["VWAP resets every day — it's meaningless on daily charts. Intraday only","VPOC is the price with highest volume transacted — institutional 'fair value'. Price gravitates back to it","India VIX > 20 = elevated fear = reduce long bias, consider reduced position sizes","PCR > 1 means more puts than calls = bearish hedging = macro caution. PCR < 0.7 = complacency"],
+    chips:["VWAP","Volume Profile","VPOC","India VIX","PCR","A/D ratio","NSE options chain","market breadth"],
+    deliverable:"vwap_breadth.py — intraday VWAP + Volume Profile + VIX/PCR macro filter dashboard",
+    resources:[]
+  },
+  {
+    num:"07", title:"Trend-Following Strategy — End to End", level:"INTERMEDIATE", lv:"lv-i", phase:"Phase 3",
+    what:["Build complete rule-based trend strategy: EMA crossover + ADX filter + RSI confirmation","Position sizing by ATR: risk exactly 1% of capital per trade regardless of stock price","Define entry, stop-loss, target, and trailing stop as deterministic Python functions","Swing parameter selection: which EMA periods? What ADX threshold? How to decide without overfitting","Run on NIFTY 200 universe, generate daily signals as a ranked watchlist"],
+    learn:["Every parameter choice is a hypothesis — justify it with logic, not backtest results ('I chose EMA9 because...')","ATR-based position sizing equalises risk across different stocks — 1% risk on a ₹500 stock and a ₹5000 stock means different quantities","Trailing stop via Supertrend lets winners run — initial stop is risk management, trailing stop is return management","ADX threshold of 25 is not sacred — it's a starting point. Test 20 and 30 and understand the tradeoff"],
+    chips:["EMA crossover","ADX filter","RSI confirmation","ATR position sizing","trailing stop","Supertrend","NIFTY 200","swing signals"],
+    deliverable:"trend_strategy.py — full end-to-end trend strategy with daily signal output for NSE universe",
+    resources:[]
+  },
+  {
+    num:"08", title:"Intraday Strategy — ORB + VWAP System", level:"INTERMEDIATE", lv:"lv-i", phase:"Phase 3",
+    what:["Opening Range Breakout (ORB): compute range, detect breakout, manage with IST session timing","VWAP bounce strategy: entry at VWAP with momentum confirmation, exit before 3 PM IST","Combine ORB and VWAP — when do they agree? Agreement = higher conviction trade","Intraday stock selection: pre-market scan for high ATR%, volume > 10 Cr, proximity to key level","Implement compulsory square-off logic at 3:15 PM IST — no overnight MIS position"],
+    learn:["The 9:15–9:30 AM IST window is disproportionately important — most directional moves originate or reverse here","VWAP is the institutional price anchor — retail traders who ignore it are trading without knowing where the big players are watching","ORB range < 0.5% of price = weak range day, low probability of a clean breakout — filter these out","Square-off at 3:15 is not optional for MIS product — Zerodha auto-squares at 3:20 PM at market price, which can be terrible"],
+    chips:["ORB","Opening Range","VWAP bounce","IST session","square-off","MIS product","9:15 AM","pre-market scan"],
+    deliverable:"intraday_system.py — ORB + VWAP combined system with IST session handling and auto square-off",
+    resources:[]
+  },
+  {
+    num:"09", title:"Multi-factor Stock Ranking & Portfolio Construction", level:"INTERMEDIATE", lv:"lv-i", phase:"Phase 3",
+    what:["Build composite scoring function: momentum (RSI rank) + trend (% above EMA200) + volume (relative volume)","Z-score normalisation so each factor contributes equally regardless of scale","Screen NIFTY 200 universe: liquidity filter (volume > 5 Cr/day), volatility filter (ATR% > 1.5%)","Portfolio construction: equal weight vs ATR-weighted allocation","Correlation analysis: avoid holding highly correlated stocks (reduces diversification benefit)"],
+    learn:["A stock that scores well on all 3 factors is categorically more reliable than one scoring extreme on 1 — diversification of signals","Z-score normalisation is essential — raw RSI and raw volume are incomparable numbers","Max 10–15 positions for retail — above that, execution complexity and monitoring overhead grows faster than diversification benefit","Correlation > 0.7 between two holdings is redundant — they will draw down together, defeating diversification"],
+    chips:["z-score","multi-factor","portfolio ranking","correlation","ATR weighting","NIFTY 200 universe","position limits"],
+    deliverable:"portfolio_ranker.py — daily ranked watchlist with composite score, correlation filter, and allocation weights",
+    resources:[]
+  },
+  {
+    num:"10", title:"Backtesting Framework & Statistical Validation", level:"INTERMEDIATE", lv:"lv-i", phase:"Phase 4",
+    what:["Set up backtesting.py with real NSE data from Upstox historical API","Add realistic costs: ₹20/order + 0.03% STT + 0.01% stamp duty + slippage buffer","Compute all 5 key metrics: Sharpe, Sortino, Calmar, Max DD, Win Rate + Expectancy","Walk-forward validation: 70% in-sample optimise, 30% out-of-sample verify — is the edge real?","Monte Carlo simulation: shuffle trade sequence 1000 times, plot distribution of outcomes"],
+    learn:["A backtest without costs is a lie — always model ₹20 flat + STT + slippage or your live results will disappoint","Sharpe > 1 in-sample but < 0.5 out-of-sample = overfit. Real edge maintains ratio across both periods","Fewer than 30 trades in a backtest = statistically meaningless. You need sample size to trust any metric","Monte Carlo shows you the range of possible futures — your 5th percentile outcome is your planning drawdown"],
+    chips:["backtesting.py","walk-forward","Monte Carlo","Sharpe","Sortino","Calmar","STT","slippage","Upstox API"],
+    deliverable:"backtest_suite.py — full validation pipeline with walk-forward + Monte Carlo + cost-adjusted metrics",
+    resources:[]
+  },
+  {
+    num:"11", title:"Strategy Optimisation & Overfitting Prevention", level:"INTERMEDIATE", lv:"lv-i", phase:"Phase 4",
+    what:["Parameter optimisation with backtesting.py optimize() — understand what it's actually doing","Detect overfitting: too many parameters, too few trades, suspiciously perfect equity curve","Robustness testing: does the strategy work if you shift parameters ±20%? If it collapses, it's fragile","Regime analysis: does the strategy work in both trending and ranging periods, or only one?","Build a strategy comparison dashboard: run 3+ strategies side by side on same data"],
+    learn:["Optimise to find a robust parameter range, not a single best value — a strategy that works from EMA(8–12) is better than one that works only at EMA(9)","Data snooping bias: every time you look at the backtest and adjust, you're fitting to noise. Separate your idea generation data from your validation data","A perfectly smooth equity curve in a backtest is a red flag — real edges have noise. If it looks too good, it is","Regime analysis is not optional — a strategy that only works in bull markets is not an algo, it's a lucky streak"],
+    chips:["optimization","robustness","data snooping","regime analysis","parameter sensitivity","equity curve","overfitting detection"],
+    deliverable:"optimization_lab.py — parameter sweep + robustness test + regime breakdown for any strategy",
+    resources:[]
+  },
+  {
+    num:"12", title:"Broker API Integration — Kite Connect + Upstox", level:"ADVANCED", lv:"lv-a", phase:"Phase 5",
+    what:["Kite Connect: auth flow, access token, place/modify/cancel orders, GTT orders","Upstox API: historical data endpoint, WebSocket for live feed, order management","Handle rate limits, connection drops, and API errors gracefully (retry with backoff)","Build a unified broker abstraction layer — strategy code doesn't care if it's Kite or Upstox","Paper trading mode: same code path as live, but intercept orders and simulate fills"],
+    learn:["Kite API token expires at 8 AM daily — build auto-refresh logic or the system dies every morning","Rate limits are strict: Kite allows 3 req/sec for orders, 1 req/sec for historical data. Sleep matters","WebSocket is stateful — handle disconnect events explicitly. Silent disconnects will make your algo think the market froze","Paper trading via the same code path as live is critical — if paper and live use different code, you haven't actually tested the live path"],
+    chips:["kiteconnect","upstox-python","OAuth","GTT orders","WebSocket","rate limiting","retry backoff","paper trading","broker abstraction"],
+    deliverable:"broker_layer.py — unified Kite + Upstox abstraction with paper trading mode and auto token refresh",
+    resources:[]
+  },
+  {
+    num:"13", title:"Live Signal Engine with asyncio", level:"ADVANCED", lv:"lv-a", phase:"Phase 5",
+    what:["Build event-driven engine: WebSocket tick → bar builder → signal evaluator → order gate → order placer","asyncio: understand event loop, coroutines, and why blocking calls kill a trading system","Bar builder: aggregate ticks into 1-min/5-min OHLCV bars, handle missed ticks and gaps","Signal pipeline: re-compute indicators on each new bar, emit signal if conditions met","Error handling: what happens if the order API returns an error mid-trade?"],
+    learn:["A blocking sleep(60) in a trading loop will miss ticks during that sleep — use asyncio.sleep() and event-driven architecture","Bar building from ticks requires handling: tick arrives late, tick arrives out of order, no tick for N seconds","The signal pipeline must be idempotent — if it runs twice on the same bar it should produce the same result, not double the orders","Latency for retail swing/intraday is measured in seconds, not microseconds — you don't need HFT infrastructure, but you do need to avoid 30-second delays"],
+    chips:["asyncio","event loop","bar builder","tick aggregation","signal pipeline","idempotent","WebSocket","event-driven"],
+    deliverable:"live_engine.py — full async signal engine: WebSocket → bar → signal → risk gate → order → log",
+    resources:[]
+  },
+  {
+    num:"14", title:"Risk Management System & PnL Dashboard", level:"ADVANCED", lv:"lv-a", phase:"Phase 6",
+    what:["Implement all risk layers in code: daily loss limit, max positions, max capital per trade, kill switch","Real-time PnL tracker: MTM (Mark-to-Market) position value updated on each bar","Telegram bot: fill confirmations, stop hit alerts, daily PnL summary at 3:30 PM IST","Drawdown monitor: rolling peak-to-trough calculation with alert if threshold breached","Weekly performance report: trades taken, hit rate, avg R, total return vs NIFTY benchmark"],
+    learn:["Daily loss limit as a hard circuit-breaker in code is not optional — 'I'll stop manually' is not a risk management system","MTM P&L matters for intraday — unrealised loss on open positions should count toward daily limit","Telegram alerts are not vanity — they're your monitoring system when you're not watching the screen","Benchmark comparison matters: if your strategy returns 15% but NIFTY returns 18%, you're taking active risk for underperformance"],
+    chips:["circuit breaker","MTM PnL","Telegram bot","kill switch","drawdown monitor","risk layers","benchmark","weekly report"],
+    deliverable:"risk_dashboard.py — live PnL monitor + circuit breakers + Telegram alerts + weekly report generator",
+    resources:[]
+  },
+  {
+    num:"15", title:"Capstone — Full System Deployment & Iteration", level:"EXPERT", lv:"lv-e", phase:"Phase 6",
+    what:["Deploy full algo: data feed → signal engine → risk gate → order execution → monitoring on live capital","Start with 10% of intended capital — validate live slippage, fill quality, and execution vs backtest","Edge decay analysis: compare live trade-by-trade against backtest expected distribution","Build iteration protocol: when to adjust parameters, when to pause, when to decommission a strategy","Document the system: architecture diagram, risk parameters, decision log, monthly review template"],
+    learn:["The first week live is about finding execution bugs, not making money — treat it as a final integration test","Live slippage is almost always worse than backtest estimates — if your strategy breaks at realistic slippage, it had no real edge","Edge decay is real and expected — markets adapt. A strategy with 2-year backtest should be reviewed at 6-month intervals","The iteration flywheel is the product: system → observe → hypothesis → test → deploy. This is your real alpha — the ability to iterate faster than the market adapts"],
+    chips:["live deployment","edge decay","slippage analysis","iteration protocol","capital scaling","system documentation","review cadence"],
+    deliverable:"Full production algo system on Kite/Upstox with documented architecture, risk parameters, and iteration protocol",
+    resources:[]
+  },
+];
+
+function renderProjects(){
+  const container = document.getElementById('proj-list');
+  container.innerHTML = PROJECTS.map(p => `
+    <div class="proj" id="proj-${p.num}">
+      <div class="proj-head" onclick="toggleProj('${p.num}')">
+        <div class="proj-num">L${p.num}</div>
+        <div class="proj-title">${p.title}</div>
+        <span class="proj-phase">${p.phase}</span>
+        <span class="proj-level ${p.lv}">${p.level}</span>
+        <div class="proj-chevron">›</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-grid">
+          <div>
+            <div class="proj-section-label" style="color:var(--green)">⚒ BUILD</div>
+            <ul class="plist">${p.what.map(w=>`<li>${w}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <div class="proj-section-label" style="color:var(--blue)">🧠 LEARN</div>
+            <ul class="plist">${p.learn.map(l=>`<li>${l}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <div class="chips">${p.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+        <div class="deliverable">
+          <div class="del-icon">✅</div>
+          <div><div class="del-label">Deliverable</div><div class="del-text">${p.deliverable}</div></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleProj(num){
+  const el = document.getElementById(`proj-${num}`);
+  el.classList.toggle('open');
+}
+
+function updateNav(){
+  const sections = ['plan','mindset','indicators','strategies','lessons','backtest','execution','resources','reading'];
+  const links = document.querySelectorAll('.nav-link');
+  let current = sections[0];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#'+current);
+  });
+}
+
+function copyCode(btn){
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='copied!';
+    setTimeout(()=>btn.textContent='copy',2000);
+  });
+}
+
+renderProjects();
+window.addEventListener('scroll', updateNav, {passive:true});
+</script>
+</body>
+</html>
